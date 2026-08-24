@@ -131,8 +131,11 @@ out, stat = [], collections.Counter()
 unresolved, conflicts = collections.Counter(), []
 
 for w in weeks:
-    scored = w["tab"] != "Week 0"
-    wk = {"tab": w["tab"], "players": [canon_player(p) for p in w["players"]], "games": []}
+    # The "Week 0" tab has been rolled over to the 2026 opener (confirmed:
+    # SJSU @ USC is 2026-08-29). Everything else is the 2025 season.
+    season = 2026 if w["tab"] == "Week 0" else 2025
+    scored = season != 2026
+    wk = {"tab": w["tab"], "season": season, "players": [canon_player(p) for p in w["players"]], "games": []}
     for gm in w["games"]:
         if (w["tab"], gm["game"]) in DROP: continue
         label = gm["game"].replace('""@""', "@").replace('"@"', "@")

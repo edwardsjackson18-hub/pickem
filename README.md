@@ -37,11 +37,33 @@ Two structural quirks, both validated against the sheet's own typed records:
 With those rules, every graded week reconciles exactly with the `Record this
 week` row for all five players.
 
+## Two sources, two jobs
+
+| Source | Gives | Covers |
+|---|---|---|
+| `All_Time_Pick_Em.xlsx` | official weekly W-L and Superdog totals | 2023, 2024, 2025 |
+| the Google Sheet | every individual pick, graded | 2025 + 2026 as it happens |
+
+**The workbook is the ledger.** Season standings, all-time records and the
+trophy case all come from it. The Google Sheet is where pick-level detail lives,
+so the explorer and the charts are built from that.
+
+They deliberately disagree, and the site says so. The official 2025 totals
+(Robert 220-121) are higher than what the picks in the sheet add up to
+(Robert 208-110), because Weeks 0 and 1 of 2025 were played and scored before
+those tabs were cleared to make room for 2026. The records survive in the
+workbook; the picks don't survive anywhere.
+
+Note also that the sheet's **"Week 0" tab is now the 2026 opener**, not part of
+2025 — confirmed against ESPN, where `SJSU @ USC` is dated 2026-08-29. It is
+tagged `season: 2026` and excluded from 2025 records.
+
 ## Layout
 
 ```
 index.html            the whole site - vanilla JS, no dependencies, no build step
-season.json           what the page reads (generated)
+season.json           pick-level data the page reads (generated)
+history.json          official season + all-time records (generated)
 picks.json            raw extract, one step upstream (generated)
 scripts/
   fetch_sheet.py      pulls all 17 tabs, keeps colour + bold formatting
@@ -51,6 +73,8 @@ scripts/
   match_team.py       scoped fuzzy matcher
   smart.py            initials / substring / abbreviation fallbacks
   teams_2025.json     ESPN team + 2025 conference data
+  parse_history.py    reads the all-time workbook -> history.json
+  all_time_pickem.xlsx  the workbook itself, committed as the source of record
 ```
 
 ## Refreshing
@@ -58,6 +82,16 @@ scripts/
 ```bash
 python scripts/fetch_sheet.py && python scripts/build_season.py
 ```
+
+The history only changes when a season ends, so it is refreshed by hand:
+
+```bash
+python scripts/parse_history.py scripts/all_time_pickem.xlsx
+```
+
+That script cross-checks its own computed all-time totals against the
+workbook's `All-Time` row and reports any mismatch. It currently reconciles
+exactly for all five players, records and Superdog.
 
 `.github/workflows/refresh.yml` does this every Monday and commits the result.
 The sheet is link-shared, so there are no credentials anywhere.
@@ -90,10 +124,16 @@ its text, add a `(week, game, player)` entry to `HARD_OVERRIDES`.
 
 ## Known gaps
 
-- **JP's Superdog isn't detected.** The other four bold their pick and their
-  totals reconcile (Robert 50.5 exactly matches the sheet). JP's don't, so
-  either he marks his differently or doesn't bold it. His Superdog totals are
-  understated until that's sorted.
+- **Bold-detection of the Superdog is incomplete**, so the site takes Superdog
+  totals from the workbook rather than deriving them. Measured against the
+  workbook for 2025: Robert reconciles perfectly (50.5), Jack is off by 0.5,
+  Jackson by 2, Michael by 6.5, and **JP by 32.5** — he appears not to bold his
+  at all. The bold flag is still shown on individual picks where it was found.
+- **The 2023 standings block in the workbook has a bad cell.** It lists Michael
+  at 163-97, which is 260 games when every other player played 251. His `Total`
+  row says 154-97, which is consistent, and that is what the parser uses.
+- **2023 and 2024 are weekly aggregates only** — no pick-level data exists, so
+  the explorer, the charts and the nickname wall are 2025-only.
 - Conference is 2025 alignment, deliberately. Seventeen teams move in 2026, so a
   "current" list would mislabel this season. Rebuild `teams_2025.json` from
   ESPN's season-scoped endpoint for a new year.

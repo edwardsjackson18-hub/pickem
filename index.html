@@ -240,6 +240,36 @@ table.heat{width:100%;border-collapse:separate;border-spacing:2px;font-size:12.5
 .nick-chip:hover{transform:rotate(0) translateY(-2px) scale(1.03);border-color:var(--accent);
   box-shadow:0 4px 12px -3px rgba(74,54,28,.26);position:relative;z-index:2}
 
+/* trophy case + history */
+.cases{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.cases>*{min-width:0}
+.case{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--sh);padding:0 0 14px;overflow:hidden}
+.case .yr{display:block;padding:9px 14px;background-color:var(--panel-2);
+  background-image:var(--yard);border-bottom:1px solid var(--line);
+  font-family:var(--f-display);font-size:16px;letter-spacing:.04em;color:var(--ink)}
+.case dl{margin:0;padding:12px 14px 0;display:grid;grid-template-columns:auto 1fr;gap:5px 10px}
+.case dt{font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--mut);align-self:center}
+.case dd{margin:0;font-family:var(--f-score);font-weight:500;font-size:15px;
+  letter-spacing:.03em;text-transform:uppercase;color:var(--ink)}
+.case dd.none{font-family:var(--f-ui);font-size:12.5px;text-transform:none;color:var(--mut)}
+.crown{color:var(--gold);margin-right:4px}
+table.stand{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px}
+table.stand th{padding:8px 10px;text-align:left;font-weight:700;font-size:10.5px;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--mut);border-bottom:1px solid var(--line-2)}
+table.stand td{padding:8px 10px;border-bottom:1px solid #EFE6D3}
+table.stand tr:last-child td{border-bottom:none}
+table.stand td.rank{color:var(--mut);width:1%;font-weight:600}
+table.stand td.who{font-family:var(--f-score);font-weight:500;font-size:14.5px;
+  letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+table.stand td.n{text-align:right;white-space:nowrap}
+table.stand td.pctc{text-align:right;font-weight:600;white-space:nowrap}
+table.stand tr.lead td{background:var(--accent-fill)}
+.swatch{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:8px;vertical-align:0}
+.seasons{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.seasons>*{min-width:0}
+
 footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
   font-size:12.5px;line-height:1.6;color:var(--mut)}
 footer::before{content:"";display:block;width:52px;height:3px;margin:0 0 14px;
@@ -300,6 +330,21 @@ footer::before{content:"";display:block;width:52px;height:3px;margin:0 0 14px;
   </header>
 
   <div class="board" id="board"></div>
+  <p class="note" id="boardnote"></p>
+
+  <h2>The trophy case</h2>
+  <div class="cases" id="cases"></div>
+
+  <h2>All-time standings</h2>
+  <div class="grid2">
+    <div class="panel"><h2 class="plain" style="margin-top:0">Record</h2><div id="at-rec"></div>
+      <p class="note" id="at-note"></p></div>
+    <div class="panel"><h2 class="plain" style="margin-top:0">Superdog</h2><div id="at-sd"></div>
+      <p class="note">Points scored on designated underdog picks.</p></div>
+  </div>
+
+  <h2>Season by season</h2>
+  <div class="seasons" id="seasons"></div>
 
   <h2>Explore the picks</h2>
   <div class="filters">
@@ -354,12 +399,15 @@ footer::before{content:"";display:block;width:52px;height:3px;margin:0 0 14px;
 </div>
 
 <script>
-let ROWS=[],PLAYERS=[],WEEKS=[],PIDX={};
+let ROWS=[],PLAYERS=[],WEEKS=[],PIDX={},HIST=null,SEASON=2025;
 const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const pct=(w,n)=>n?(100*w/n).toFixed(1)+"%":"–";
 const pvar=p=>"var(--p"+(PIDX[p]%5)+")";
 
-fetch("season.json").then(r=>r.json()).then(data=>{
+Promise.all([fetch("season.json").then(r=>r.json()),
+             fetch("history.json").then(r=>r.json()).catch(()=>null)])
+  .then(([data,hist])=>{
+  HIST=hist;
   WEEKS=data.map(w=>w.tab);
   const ps=[];
   data.forEach(w=>w.games.forEach(g=>{
@@ -373,12 +421,18 @@ fetch("season.json").then(r=>r.json()).then(data=>{
     });
   }));
   PLAYERS=ps; PLAYERS.forEach((p,i)=>PIDX[p]=i);
+  if(HIST){PLAYERS=HIST.players.filter(p=>PLAYERS.includes(p)).concat(
+      PLAYERS.filter(p=>!HIST.players.includes(p)));
+    PLAYERS.forEach((p,i)=>PIDX[p]=i);}
+  if(HIST){cases();alltime();seasons();}
   initFilters();board();render();race();favdog();byspread();agree();byconf();wall();
   const gm=data.reduce((a,w)=>a+w.games.length,0);
   document.getElementById("sub").textContent=
     PLAYERS.join(" · ")+" — "+gm+" games, "+ROWS.length+" picks";
   document.getElementById("meta").textContent=
-    "Straight-up grading read from the sheet's cell colours. Blank pick counts as a loss. Week 0 was never scored and is excluded from records.";
+    "Season and all-time records come from the All-Time Pick 'Em workbook, which is the official ledger. Pick-level detail is read live from the Google Sheet: green/red text = won/lost straight up, bold = that week's Superdog. Blank pick counts as a loss.";
+  document.getElementById("boardnote").textContent=
+    "2025 records computed from the picks still in the sheet. The official 2025 totals below are higher because Weeks 0 and 1 were scored before those tabs were cleared for 2026.";
 });
 
 function rec(rows,p){let w=0,l=0;
@@ -544,6 +598,57 @@ function agree(){
     }).join("")+"</tr>";});
   document.getElementById("agree").innerHTML=g+"</tbody></table>";
 }
+/* ---------- history: trophy case, all-time, season by season ---------- */
+function standTable(list,key,fmt){
+  return `<table class="stand"><thead><tr><th></th><th>Player</th>`+
+    (key==="sd"?`<th style="text-align:right">Points</th>`
+              :`<th style="text-align:right">W-L</th><th style="text-align:right">Win %</th>`)+
+    `</tr></thead><tbody>`+
+    list.map((r,i)=>`<tr class="${i===0?"lead":""}">
+      <td class="rank">${i+1}</td>
+      <td class="who"><span class="swatch" style="background:${pvar(r.player)}"></span>${esc(r.player)}</td>`+
+      (key==="sd"?`<td class="pctc">${(+r.sd).toFixed(1)}</td>`
+        :`<td class="n">${r.w}-${r.l}</td><td class="pctc">${(100*r.pct).toFixed(1)}%</td>`)+
+    `</tr>`).join("")+`</tbody></table>`;
+}
+function cases(){
+  const done=HIST.champions.filter(c=>c.full_season);
+  document.getElementById("cases").innerHTML=done.map(c=>{
+    const rows=[["Champion",c.full_season],["Reg. season",c.regszn],
+                ["Bowls",c.bowls],["Superdog",c.superdog]];
+    return `<div class="case"><span class="yr">${c.year}</span><dl>`+
+      rows.map(([k,v])=>`<dt>${k}</dt>`+
+        (v?`<dd><span class="crown">&#9733;</span>${esc(v)}</dd>`
+          :`<dd class="none">not tracked</dd>`)).join("")+`</dl></div>`;
+  }).join("");
+}
+function alltime(){
+  document.getElementById("at-rec").innerHTML=standTable(HIST.alltime,"rec");
+  document.getElementById("at-sd").innerHTML=
+    standTable([...HIST.alltime].sort((a,b)=>b.sd-a.sd),"sd");
+  const g=HIST.alltime[0]?HIST.alltime[0].w+HIST.alltime[0].l:0;
+  const titles={};HIST.champions.forEach(c=>{if(c.full_season)titles[c.full_season]=(titles[c.full_season]||0)+1;});
+  const best=HIST.alltime[0], untitled=HIST.alltime.filter(a=>!titles[a.player]);
+  document.getElementById("at-note").textContent=
+    g+" games each across "+HIST.seasons.length+" seasons ("+
+    HIST.seasons.map(s=>s.year).join(", ")+")."+
+    (untitled.some(u=>u.player===best.player)
+      ? " "+best.player+" has the best all-time record and has never won a season."
+      : "");
+}
+function seasons(){
+  document.getElementById("seasons").innerHTML=[...HIST.seasons].reverse().map(s=>{
+    const champ=(HIST.champions.find(c=>c.year===s.year)||{}).full_season;
+    return `<div class="panel"><h2 class="plain" style="margin-top:0">${s.year}${
+      champ?` &mdash; <span style="color:var(--accent)">${esc(champ)}</span>`:""}</h2>`+
+      standTable(s.standings,"rec")+
+      `<p class="note">Superdog: `+
+      [...s.standings].sort((a,b)=>b.sd-a.sd)
+        .map((x,i)=>`${i?"":"<strong>"}${esc(x.player)} ${(+x.sd).toFixed(1)}${i?"":"</strong>"}`)
+        .join(" &middot; ")+`</p></div>`;
+  }).join("");
+}
+
 function wall(){
   const seen=new Set(),out=[];
   ROWS.forEach(r=>{if(!r.joke||!r.raw||!r.team)return;
