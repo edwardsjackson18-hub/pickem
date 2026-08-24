@@ -290,7 +290,9 @@ footer::before{content:"";display:block;width:52px;height:3px;margin:0 0 14px;
   .board{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
   .pcard .rec{font-size:26px}
   .filters .row{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .tablewrap{max-height:none}
+  /* keep the table scrolling inside its own box on phones - letting it expand
+     meant scrolling past 400 rows to reach anything below it */
+  .tablewrap{max-height:70vh}
   .barrow{grid-template-columns:78px minmax(0,1fr) auto;gap:9px}
 }
 @media (max-width:560px){
@@ -302,6 +304,7 @@ footer::before{content:"";display:block;width:52px;height:3px;margin:0 0 14px;
   .chip{flex:none}
   .barrow{grid-template-columns:66px minmax(0,1fr) auto;font-size:12.5px}
   .heat{font-size:11.5px}.heat td{padding:6px 4px}
+  .tablewrap{max-height:62vh;min-height:200px}
 }
 @media (hover:none){.pcard:hover{transform:none;box-shadow:var(--sh)}.nick-chip:hover{transform:none}.chip{height:34px}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important}}
