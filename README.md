@@ -96,6 +96,28 @@ exactly for all five players, records and Superdog.
 `.github/workflows/refresh.yml` does this every Monday and commits the result.
 The sheet is link-shared, so there are no credentials anywhere.
 
+## Freezing a season before the tabs roll over
+
+The pool reuses the same tabs every year. Week 0 has already been overwritten
+for 2026, and Weeks 1-14, Conf Champ and BOWLS will follow as the season goes.
+The weekly refresh job re-reads the sheet, so without protection it would
+**erase 2025's picks one tab at a time**.
+
+So each completed season is frozen into `seasons/<year>.json` and treated as
+immutable. On every build, a tab is considered to have rolled over only once its
+game list no longer matches the frozen snapshot; until then the frozen copy
+wins. `season.json` is the merge of every frozen season plus whatever the live
+sheet currently owns.
+
+**When a season ends, freeze it:**
+
+```bash
+python scripts/freeze_season.py 2026
+```
+
+The workbook keeps the season *records* regardless, but individual picks,
+nicknames and Superdog flags exist only in the sheet until they are frozen.
+
 ## Resolving nicknames
 
 Picks are freeform and often jokes — `Cock Tuah`, `Hooty Hoo`, `Ole piss`,

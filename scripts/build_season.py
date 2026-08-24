@@ -122,19 +122,56 @@ def bucket(sp):
     return "21+"
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FROZEN_DIR = os.path.join(ROOT, "seasons")
+CURRENT_SEASON = 2026
 PICKS = os.path.join(ROOT, "picks.json")
 OUT   = os.path.join(ROOT, "season.json")
 
+WEEK_ORDER = {t: i for i, t in enumerate(
+    ["Week %d" % n for n in range(0, 15)] + ["Conf Champ", "BOWLS"])}
+
 DROP = {("Week 2", "#2 S Dakota St @ #3 Montana St")}
+# ---- frozen past seasons: immutable, never re-read from the sheet -----------
+FROZEN = {}
+if os.path.isdir(FROZEN_DIR):
+    for fn in sorted(os.listdir(FROZEN_DIR)):
+        if not fn.endswith(".json"): continue
+        yr = int(fn[:-5])
+        FROZEN[yr] = json.load(io.open(os.path.join(FROZEN_DIR, fn), encoding="utf-8"))
+
+def frozen_games(year, tab):
+    for w in FROZEN.get(year, []):
+        if w["tab"] == tab:
+            return [g["raw"] for g in w["games"]]
+    return None
+
+def last_frozen_season(tab):
+    """Newest frozen season that still owns this tab."""
+    for yr in sorted(FROZEN, reverse=True):
+        if frozen_games(yr, tab) is not None:
+            return yr
+    return None
+
+def rolled_over(w):
+    """True once the live tab's games no longer match any frozen snapshot."""
+    live = [g["game"] for g in w["games"] if (w["tab"], g["game"]) not in DROP]
+    yr = last_frozen_season(w["tab"])
+    if yr is None:
+        return True                      # nothing frozen for this tab yet
+    old = frozen_games(yr, w["tab"])
+    return set(live) != set(old)
+
 weeks = json.load(io.open(PICKS, encoding="utf-8"))
 out, stat = [], collections.Counter()
 unresolved, conflicts = collections.Counter(), []
 
 for w in weeks:
-    # The "Week 0" tab has been rolled over to the 2026 opener (confirmed:
-    # SJSU @ USC is 2026-08-29). Everything else is the 2025 season.
-    season = 2026 if w["tab"] == "Week 0" else 2025
-    scored = season != 2026
+    # The pool reuses the same tabs every year, so a tab belongs to the current
+    # season only once its games differ from the frozen snapshot. Until then the
+    # sheet still holds last season's picks and the frozen copy wins.
+    season = CURRENT_SEASON if rolled_over(w) else last_frozen_season(w["tab"])
+    if season is None: season = CURRENT_SEASON
+    scored = season != CURRENT_SEASON
     wk = {"tab": w["tab"], "season": season, "players": [canon_player(p) for p in w["players"]], "games": []}
     for gm in w["games"]:
         if (w["tab"], gm["game"]) in DROP: continue
@@ -186,6 +223,20 @@ for w in weeks:
             "picks": picks})
     out.append(wk)
 
+# ---- merge: every frozen season, plus whatever the live sheet currently owns.
+# A frozen tab is only superseded if the live sheet still claims it for the SAME
+# season. Once a tab rolls over to the new year, the frozen copy is what keeps
+# the old season's picks alive - the sheet no longer has them anywhere.
+live_keys = {(w["season"], w["tab"]) for w in out}
+merged = []
+for yr in sorted(FROZEN):
+    for w in FROZEN[yr]:
+        if (yr, w["tab"]) not in live_keys:
+            merged.append(w)
+merged += out
+merged.sort(key=lambda w: (w["season"], WEEK_ORDER.get(w["tab"], 99)))
+out = merged
+
 json.dump(out, io.open(OUT,"w",encoding="utf-8"), separators=(",",":"), ensure_ascii=False)
 
 print("bridged %d/%d curated teams to ESPN ids" % (len(CID), len(TEAMS)))
@@ -204,6 +255,11 @@ for w in out:
                 bad.append((w["tab"], g["raw"], lab, sch))
 print("LABEL AUDIT: %d suspicious team resolutions" % len(bad))
 for b in bad: print("   %-11s %-40s %-14s -> %s"%(b[0],b[1][:40],b[2],b[3]))
+by_season = {}
+for w in out: by_season[w["season"]] = by_season.get(w["season"], 0) + len(w["games"])
+print("SEASONS: %s" % ", ".join("%d (%d games%s)" % (y, n, ", frozen" if y in FROZEN
+      and not any(x["season"] == y for x in globals().get("_live", [])) else "")
+      for y, n in sorted(by_season.items())))
 print("GRADING CHECKSUM: %d conflicts" % len(conflicts))
 for c in conflicts[:10]: print("   ", c)
 if unresolved:

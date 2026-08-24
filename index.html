@@ -154,8 +154,11 @@ input::placeholder{color:#9C8A72}
     linear-gradient(to left,rgba(74,54,28,.13),rgba(74,54,28,0) 14px);
   background-position:right center,right center;background-repeat:no-repeat;
   background-size:14px 100%,14px 100%;background-attachment:local,scroll}
-table.picks{width:100%;min-width:760px;border-collapse:separate;border-spacing:0;
-  font-size:13.5px;line-height:1.35}
+/* table-layout:fixed - with auto layout the min-width on the game column
+   fought the nowrap columns and one column ballooned to 1300px. Fixed widths
+   also make a 400-row table lay out far faster. */
+table.picks{width:100%;min-width:880px;table-layout:fixed;border-collapse:separate;
+  border-spacing:0;font-size:13.5px;line-height:1.35}
 table.picks thead th{position:sticky;top:0;z-index:3;padding:10px 12px;
   background:var(--accent-2);color:var(--chalk);font-weight:700;font-size:11px;
   letter-spacing:.075em;text-transform:uppercase;text-align:left;white-space:nowrap;
@@ -164,11 +167,12 @@ table.picks tbody td{padding:7px 12px;border-bottom:1px solid #EFE6D3;vertical-a
 table.picks tbody tr:nth-child(even) td{background:var(--band)}
 table.picks tbody tr:hover td{background:var(--hover)}
 table.picks tbody tr:last-child td{border-bottom:none}
-td.week{color:var(--mut);font-weight:600;font-size:12.5px;white-space:nowrap}
-td.game{color:var(--ink-2);white-space:normal;min-width:220px}
+td.week{color:var(--mut);font-weight:600;font-size:12.5px;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+td.game{color:var(--ink-2);white-space:normal;overflow-wrap:anywhere}
 td.spread{text-align:right;white-space:nowrap}
 td.conf{color:var(--mut);font-size:12.5px;white-space:nowrap}
-td.pick{font-weight:600;white-space:nowrap}
+td.pick{font-weight:600;white-space:normal;overflow-wrap:anywhere}
 .dot{display:inline-block;width:7px;height:7px;margin-right:7px;border-radius:99px;vertical-align:.08em}
 .hit{color:var(--win)} .hit .dot{background:var(--win);border:1.5px solid var(--win)}
 .miss{color:var(--loss)} .miss .dot{background:transparent;border:1.5px solid var(--loss)}
@@ -370,13 +374,20 @@ footer::before{content:"";display:block;width:52px;height:3px;margin:0 0 14px;
     <p class="count" id="count"></p>
   </div>
 
-  <div class="tablewrap" style="margin-top:14px"><table class="picks" id="tbl"></table></div>
+  <div class="tablewrap" style="margin-top:14px"><table class="picks" id="tbl">
+    <colgroup><col style="width:92px"><col style="width:30%"><col style="width:84px">
+      <col style="width:28%"><col style="width:104px"><col style="width:74px">
+      <col style="width:74px"></colgroup>
+  </table></div>
 
   <h2>Records for this selection</h2>
   <div class="panel"><div class="bars" id="splits"></div></div>
 
-  <h2>Season race &mdash; cumulative wins</h2>
-  <div class="panel"><div id="race"></div></div>
+  <h2>The long race &mdash; cumulative wins</h2>
+  <div class="panel">
+    <div class="chips" style="margin:0 0 14px;padding-top:0;border-top:none" id="racescope"></div>
+    <div id="race"></div>
+  </div>
 
   <div class="grid2" style="margin-top:16px">
     <div class="panel"><h2 class="plain" style="margin-top:0">Favorite vs. underdog</h2><div id="favdog"></div></div>
@@ -503,7 +514,8 @@ function render(){
   document.getElementById("count").textContent=
     rows.length+" picks match"+(rows.length?"":" — try widening the filters");
   const t=document.getElementById("tbl");
-  t.innerHTML="<thead><tr><th>Week</th><th>Game</th><th>Player</th><th>Pick</th>"+
+  const cg=t.querySelector("colgroup");
+  t.innerHTML=(cg?cg.outerHTML:"")+"<thead><tr><th>Week</th><th>Game</th><th>Player</th><th>Pick</th>"+
     "<th>Conf</th><th>Spread</th><th>Result</th></tr></thead><tbody>"+
     (rows.length?rows.slice(0,400).map(r=>{
       const cls=r.result==="win"?"hit":r.result==="loss"?"miss":"na";
@@ -535,25 +547,72 @@ function tallyIf(p,f){let w=0,l=0;
   return {w,l,n:w+l,v:w+l?100*w/(w+l):0};}
 
 function race(){
-  const W=980,H=300,L=44,R=16,T=14,B=28;
-  const wk=WEEKS.filter(x=>x!=="Week 0");
-  const series=PLAYERS.map(p=>{let c=0;const pts=[];
-    wk.forEach(w=>{for(const r of ROWS){if(r.player===p&&r.week===w&&r.scored&&r.result==="win")c++;}pts.push(c);});
-    return {p,pts};});
+  if(!HIST){document.getElementById("race").innerHTML="";return;}
+  const years=HIST.seasons.map(s=>s.year);
+  const box=document.getElementById("racescope");
+  if(box && !box.dataset.built){
+    box.dataset.built="1";
+    box.innerHTML=`<button class="chip on" data-scope="all">All time</button>`+
+      years.slice().reverse().map(y=>`<button class="chip" data-scope="${y}">${y}</button>`).join("");
+    box.querySelectorAll(".chip").forEach(b=>b.addEventListener("click",()=>{
+      box.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));
+      b.classList.add("on"); drawRace(b.dataset.scope);}));
+  }
+  drawRace((box&&box.querySelector(".chip.on")&&box.querySelector(".chip.on").dataset.scope)||"all");
+}
+
+function drawRace(scope){
+  const seasons=HIST.seasons.filter(s=>scope==="all"||String(s.year)===String(scope));
+  // flatten every scored week into one sequence, remembering season boundaries
+  const cols=[], bounds=[];
+  seasons.forEach(s=>{
+    const startIdx=cols.length;
+    s.weeks.forEach(w=>{
+      const any=HIST.players.some(p=>(w.players[p]||{}).w!=null);
+      if(!any) return;
+      cols.push({year:s.year,label:w.week,players:w.players});
+    });
+    if(cols.length>startIdx) bounds.push({year:s.year,from:startIdx,to:cols.length-1});
+  });
+  if(!cols.length){document.getElementById("race").innerHTML=
+    '<p class="note">No weekly data for this season.</p>';return;}
+
+  const series=HIST.players.map(p=>{let c=0;
+    return {p,pts:cols.map(col=>{const v=(col.players[p]||{}).w;c+=(v==null?0:v);return c;})};});
   const max=Math.max(...series.flatMap(s=>s.pts))||1;
-  const x=j=>L+j*(W-L-R)/Math.max(1,wk.length-1), y=v=>T+(H-T-B)*(1-v/max);
+  const W=980,H=330,L=48,R=54,T=16,B=42;
+  const x=j=>L+(cols.length<2?0:j*(W-L-R)/(cols.length-1)), y=v=>T+(H-T-B)*(1-v/max);
+
   let g="";
   for(let k=0;k<=4;k++){const v=Math.round(max*k/4);
     g+=`<line class="grid" x1="${L}" y1="${y(v)}" x2="${W-R}" y2="${y(v)}"/>
         <text x="${L-8}" y="${y(v)+3}" text-anchor="end">${v}</text>`;}
-  wk.forEach((w,j)=>{if(j%2===0||j===wk.length-1)
-    g+=`<text x="${x(j)}" y="${H-8}" text-anchor="middle">${esc(w.replace("Week ","W").replace("Conf Champ","CCG").replace("BOWLS","Bowl"))}</text>`;});
+  // season dividers + year labels
+  if(scope==="all"){
+    bounds.forEach((b,i)=>{
+      if(i>0){const xm=(x(b.from)+x(b.from-1))/2;
+        g+=`<line x1="${xm}" y1="${T}" x2="${xm}" y2="${H-B}" stroke="var(--line-2)" stroke-dasharray="3 4"/>`;}
+      g+=`<text x="${(x(b.from)+x(b.to))/2}" y="${H-8}" text-anchor="middle"
+           style="font-family:var(--f-display);font-size:13px;fill:var(--ink)">${b.year}</text>`;
+    });
+  }else{
+    cols.forEach((c,j)=>{if(j%2===0||j===cols.length-1)
+      g+=`<text x="${x(j)}" y="${H-24}" text-anchor="middle">${esc(String(c.label))}</text>`;});
+  }
   series.forEach(s=>{const i=PIDX[s.p]%5;
-    g+=`<polyline class="s${i}" points="${s.pts.map((v,j)=>x(j)+","+y(v)).join(" ")}"/>
-        <circle cx="${x(s.pts.length-1)}" cy="${y(s.pts[s.pts.length-1])}" r="3.6" fill="${pvar(s.p)}"/>`;});
+    g+=`<polyline class="s${i}" points="${s.pts.map((v,j)=>x(j)+","+y(v)).join(" ")}"/>`
+     +`<circle cx="${x(s.pts.length-1)}" cy="${y(s.pts[s.pts.length-1])}" r="3.6" fill="${pvar(s.p)}"/>`
+     +`<text x="${x(s.pts.length-1)+8}" y="${y(s.pts[s.pts.length-1])+4}"
+        style="fill:${pvar(s.p)};font-weight:700">${s.pts[s.pts.length-1]}</text>`;});
+  const rank=[...series].sort((a,b)=>b.pts[b.pts.length-1]-a.pts[a.pts.length-1]);
   document.getElementById("race").innerHTML=`<svg viewBox="0 0 ${W} ${H}">${g}</svg>`+
-    `<div class="legend">${series.map(s=>`<span><i style="background:${pvar(s.p)}"></i>${esc(s.p)} ${s.pts[s.pts.length-1]}</span>`).join("")}</div>`;
+    `<div class="legend">`+rank.map(s=>
+      `<span><i style="background:${pvar(s.p)}"></i>${esc(s.p)} ${s.pts[s.pts.length-1]}</span>`).join("")+
+    `</div><p class="note">${scope==="all"
+      ? cols.length+" scored weeks across "+bounds.map(b=>b.year).join(", ")+" — "+max+" wins for the leader."
+      : "Cumulative wins through "+scope+"."}</p>`;
 }
+
 function favdog(){
   const mk=(title,f)=>`<p class="note" style="margin:12px 0 6px">${title}</p><div class="bars">`+
     PLAYERS.map(p=>{const x=tallyIf(p,f);
