@@ -1,0 +1,50 @@
+name: Refresh picks from Google Sheet
+
+# The site is static, so the data is refreshed here and committed.
+# The sheet is link-shared, so no credentials are needed.
+on:
+  schedule:
+    - cron: "0 13 * * 1"      # Mondays 13:00 UTC (~8am ET), after the weekend's games
+  workflow_dispatch:           # ...or run it by hand from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Pull every tab (picks + green/red grading + bold superdog flags)
+        run: python scripts/fetch_sheet.py
+
+      - name: Resolve teams and build season.json
+        run: python scripts/build_season.py | tee build.log
+
+      - name: Fail if the grading checksum found a conflict
+        # Everyone who picked the same side of a game must share the same colour.
+        # A conflict means a pick was resolved to the wrong team.
+        run: |
+          grep -q "GRADING CHECKSUM: 0 conflicts" build.log \
+            || { echo "::error::grading checksum failed - a pick resolved to the wrong team"; exit 1; }
+
+      - name: Warn on unresolved picks
+        run: |
+          if grep -q "^unresolved" build.log; then
+            echo "::warning::some picks did not resolve - add them to scripts/aliases.py"
+            sed -n '/^unresolved/,$p' build.log
+          fi
+
+      - name: Commit if anything changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add season.json picks.json
+          git diff --staged --quiet && echo "no changes" && exit 0
+          git commit -m "Refresh picks from the sheet"
+          git push

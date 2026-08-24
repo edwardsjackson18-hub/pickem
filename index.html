@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Brad and the Gang Pick 'Em</title>
+<style>
+:root{
+  --bg:#0d1117; --panel:#161b22; --line:#262c36; --ink:#e6edf3; --mut:#8b949e;
+  --win:#3fb950; --loss:#f85149; --dog:#ff8c42; --accent:#d4a017;
+  --p0:#4cc9f0; --p1:#f72585; --p2:#ffb703; --p3:#06d6a0; --p4:#b388ff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1240px;margin:0 auto;padding:22px 18px 80px}
+h1{font-size:26px;margin:0;letter-spacing:-.02em}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.09em;color:var(--mut);
+  margin:34px 0 12px;font-weight:600}
+.sub{color:var(--mut);font-size:13px;margin-top:4px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.pad{padding:16px}
+
+/* leaderboard */
+.board{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:18px}
+.pl{border-left:3px solid var(--c);padding:12px 14px}
+.pl .nm{font-weight:600;font-size:14px}
+.pl .rec{font-size:23px;font-variant-numeric:tabular-nums;margin-top:2px;letter-spacing:-.02em}
+.pl .pct{color:var(--mut);font-size:12px;font-variant-numeric:tabular-nums}
+.pl .bar{height:4px;border-radius:2px;background:#21262d;margin-top:8px;overflow:hidden}
+.pl .bar i{display:block;height:100%;background:var(--c)}
+
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.fg{min-width:130px}
+.fg label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--mut);margin-bottom:5px}
+select,input[type=text]{background:#0d1117;color:var(--ink);border:1px solid var(--line);
+  border-radius:7px;padding:6px 9px;font:inherit;font-size:13px;min-width:130px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:#0d1117;color:var(--ink);border-radius:999px;
+  padding:5px 11px;font-size:12px;cursor:pointer;font-family:inherit}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#0d1117;font-weight:600}
+.reset{margin-left:auto;align-self:center}
+
+/* table */
+.scroll{overflow-x:auto;max-height:560px;overflow-y:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:8px 11px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+thead th{position:sticky;top:0;background:#1b212a;font-size:11px;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--mut);z-index:2}
+td.g{white-space:normal;min-width:230px}
+.pk{display:inline-flex;align-items:center;gap:5px}
+.dot{width:7px;height:7px;border-radius:50%;flex:none}
+.w .dot{background:var(--win)} .l .dot{background:var(--loss)}
+.w{color:var(--win)} .l{color:var(--loss)}
+.na{color:var(--mut);opacity:.5}
+.tag{font-size:10px;padding:1px 5px;border-radius:4px;border:1px solid var(--line);
+  color:var(--mut);margin-left:5px}
+.tag.dog{color:var(--dog);border-color:#5a3a20}
+.tag.sd{color:var(--accent);border-color:#5a4a15}
+.raw{color:var(--mut);font-size:11px;font-style:italic}
+
+/* charts */
+.grid2{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:900px){.grid2{grid-template-columns:1fr 1fr}}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.ax{stroke:var(--line);stroke-width:1}
+.axt{fill:var(--mut);font-size:10px}
+.gl{stroke:#1e242c;stroke-width:1}
+.lgd{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--mut);margin-top:8px}
+.lgd i{width:9px;height:9px;border-radius:2px;display:inline-block;margin-right:5px}
+.mx td,.mx th{text-align:center;font-variant-numeric:tabular-nums;border:1px solid var(--line);
+  padding:7px 9px;font-size:12.5px}
+.mx th{background:#1b212a;color:var(--mut);font-size:11px}
+.empty{padding:30px;text-align:center;color:var(--mut)}
+footer{margin-top:40px;color:var(--mut);font-size:12px;border-top:1px solid var(--line);padding-top:14px}
+footer a{color:var(--mut)}
+.count{color:var(--mut);font-size:12px;margin:10px 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Brad and the Gang Pick 'Em</h1>
+  <div class="sub" id="sub">loading…</div>
+
+  <div class="board" id="board"></div>
+
+  <h2>Explore the picks</h2>
+  <div class="card pad">
+    <div class="filters">
+      <div class="fg"><label>Player</label><select id="f-player"></select></div>
+      <div class="fg"><label>Week</label><select id="f-week"></select></div>
+      <div class="fg"><label>Team picked</label><select id="f-team"></select></div>
+      <div class="fg"><label>Conference</label><select id="f-conf"></select></div>
+      <div class="fg"><label>Spread</label><select id="f-spread"></select></div>
+      <div class="fg"><label>Slate</label><select id="f-slate"></select></div>
+      <div class="fg"><label>Search</label><input type="text" id="f-q" placeholder="team, game, nickname…"></div>
+      <div class="reset"><button class="chip" id="reset">Reset</button></div>
+    </div>
+    <div class="chips" style="margin-top:14px">
+      <button class="chip" data-t="dog">Underdog only</button>
+      <button class="chip" data-t="fav">Favorite only</button>
+      <button class="chip" data-t="sd">Superdog picks</button>
+      <button class="chip" data-t="win">Hits only</button>
+      <button class="chip" data-t="loss">Misses only</button>
+      <button class="chip" data-t="joke">Nickname picks</button>
+      <button class="chip" data-t="bowl">Bowls &amp; CFP</button>
+    </div>
+    <p class="count" id="count"></p>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="scroll"><table id="tbl"></table></div>
+  </div>
+
+  <h2>Records for this selection</h2>
+  <div class="card pad"><div id="splits"></div></div>
+
+  <h2>Season race — cumulative wins</h2>
+  <div class="card pad"><div id="race"></div></div>
+
+  <div class="grid2" style="margin-top:16px">
+    <div class="card pad">
+      <h2 style="margin-top:0">Favorite vs. underdog</h2>
+      <div id="favdog"></div>
+    </div>
+    <div class="card pad">
+      <h2 style="margin-top:0">Win % by spread size</h2>
+      <div id="byspread"></div>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-top:16px">
+    <div class="card pad">
+      <h2 style="margin-top:0">Who picks alike</h2>
+      <div id="agree"></div>
+      <div class="sub">Share of games where both took the same side.</div>
+    </div>
+    <div class="card pad">
+      <h2 style="margin-top:0">Conference win %</h2>
+      <div id="byconf"></div>
+    </div>
+  </div>
+
+  <h2>The nickname wall</h2>
+  <div class="card pad"><div id="wall"></div></div>
+
+  <footer>
+    <span id="meta"></span> ·
+    <a href="https://docs.google.com/spreadsheets/d/1S6EdbH2tCHA76DTdzS0ebDIGMqsSOMwzkrnlP3lbfJc/edit" target="_blank" rel="noopener">source sheet</a>
+  </footer>
+</div>
+
+<script>
+const PC = ["--p0","--p1","--p2","--p3","--p4"];
+let ROWS = [], PLAYERS = [], WEEKS = [], css = getComputedStyle(document.documentElement);
+const col = i => css.getPropertyValue(PC[i % 5]).trim();
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pct = (w,n) => n ? (100*w/n).toFixed(1)+"%" : "–";
+
+// ---------- load & flatten ----------
+fetch("season.json").then(r=>r.json()).then(data=>{
+  WEEKS = data.map(w=>w.tab);
+  const ps = new Set();
+  data.forEach(w=>{
+    w.games.forEach(g=>{
+      Object.entries(g.picks).forEach(([p,v])=>{
+        ps.add(p);
+        const joke = v.team && v.raw &&
+          !v.team.toLowerCase().split(/[^a-z]+/).some(t=>t.length>2 && v.raw.toLowerCase().includes(t));
+        ROWS.push({week:w.tab, game:g.raw, spread:g.spread, bucket:g.bucket,
+          slate:g.slate, bowl:g.bowl, scored:g.scored, away:g.away, home:g.home,
+          awayConf:g.away_conf, homeConf:g.home_conf,
+          player:p, raw:v.raw, team:v.team, conf:v.conf, result:v.result,
+          dog:v.is_dog, fav:v.is_fav, sd:v.superdog, sdp:v.sd_points, joke:joke});
+      });
+    });
+  });
+  PLAYERS = [...ps];
+  initFilters(); board(); render();
+  race(); favdog(); byspread(); agree(); byconf(); wall();
+  const gm = data.reduce((a,w)=>a+w.games.length,0);
+  document.getElementById("sub").textContent =
+    PLAYERS.join(" · ") + " — " + gm + " games, " + ROWS.length + " picks";
+  document.getElementById("meta").textContent =
+    "Straight-up grading read from the sheet's cell colours. Blank pick counts as a loss. Week 0 was never scored and is excluded from records.";
+});
+
+// ---------- leaderboard ----------
+function rec(rows, p){
+  let w=0,l=0;
+  for(const r of rows){ if(r.player!==p||!r.scored||!r.result) continue;
+    r.result==="win"?w++:l++; }
+  return [w,l];
+}
+function board(){
+  const el = document.getElementById("board");
+  const st = PLAYERS.map((p,i)=>{ const [w,l]=rec(ROWS,p); return {p,w,l,i,n:w+l}; })
+                    .sort((a,b)=> (b.w/b.n)-(a.w/a.n));
+  el.innerHTML = st.map(s=>`<div class="card pl" style="--c:${col(s.i)}">
+      <div class="nm">${esc(s.p)}</div>
+      <div class="rec">${s.w}-${s.l}</div>
+      <div class="pct">${pct(s.w,s.n)}</div>
+      <div class="bar"><i style="width:${(100*s.w/s.n).toFixed(1)}%"></i></div></div>`).join("");
+}
+
+// ---------- filters ----------
+const F = {player:"",week:"",team:"",conf:"",spread:"",slate:"",q:"",toggles:new Set()};
+function opts(sel, list, label){
+  sel.innerHTML = `<option value="">${label}</option>` +
+    list.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join("");
+}
+function initFilters(){
+  const uniq = f => [...new Set(ROWS.map(f).filter(Boolean))].sort();
+  opts(document.getElementById("f-player"), PLAYERS, "All players");
+  opts(document.getElementById("f-week"), WEEKS, "All weeks");
+  opts(document.getElementById("f-team"), uniq(r=>r.team), "Any team");
+  opts(document.getElementById("f-conf"), uniq(r=>r.conf), "Any conference");
+  opts(document.getElementById("f-spread"),
+       ["1-3","3.5-7","7.5-13.5","14-20.5","21+","none"], "Any spread");
+  opts(document.getElementById("f-slate"), uniq(r=>r.slate), "Any slate");
+  const bind = (id,k)=>document.getElementById(id).addEventListener("input",e=>{
+    F[k]=e.target.value; render(); });
+  bind("f-player","player"); bind("f-week","week"); bind("f-team","team");
+  bind("f-conf","conf"); bind("f-spread","spread"); bind("f-slate","slate"); bind("f-q","q");
+  document.querySelectorAll(".chip[data-t]").forEach(b=>b.addEventListener("click",()=>{
+    const t=b.dataset.t;
+    if(F.toggles.has(t)){F.toggles.delete(t);b.classList.remove("on");}
+    else{F.toggles.add(t);b.classList.add("on");}
+    render();
+  }));
+  document.getElementById("reset").addEventListener("click",()=>{
+    Object.assign(F,{player:"",week:"",team:"",conf:"",spread:"",slate:"",q:""});
+    F.toggles.clear();
+    document.querySelectorAll(".chip[data-t]").forEach(b=>b.classList.remove("on"));
+    ["f-player","f-week","f-team","f-conf","f-spread","f-slate","f-q"]
+      .forEach(id=>document.getElementById(id).value="");
+    render();
+  });
+}
+function filtered(){
+  const q = F.q.trim().toLowerCase();
+  return ROWS.filter(r=>{
+    if(F.player && r.player!==F.player) return false;
+    if(F.week && r.week!==F.week) return false;
+    if(F.team && r.team!==F.team) return false;
+    if(F.conf && r.conf!==F.conf) return false;
+    if(F.spread && r.bucket!==F.spread) return false;
+    if(F.slate && r.slate!==F.slate) return false;
+    for(const t of F.toggles){
+      if(t==="dog" && !r.dog) return false;
+      if(t==="fav" && !r.fav) return false;
+      if(t==="sd" && !r.sd) return false;
+      if(t==="win" && r.result!=="win") return false;
+      if(t==="loss" && r.result!=="loss") return false;
+      if(t==="joke" && !r.joke) return false;
+      if(t==="bowl" && !r.bowl) return false;
+    }
+    if(q && !((r.game+" "+r.raw+" "+(r.team||"")+" "+(r.conf||"")).toLowerCase().includes(q)))
+      return false;
+    return true;
+  });
+}
+
+// ---------- table + splits ----------
+function render(){
+  const rows = filtered();
+  document.getElementById("count").textContent =
+    rows.length + " picks match" + (rows.length ? "" : " — try widening the filters");
+  const t = document.getElementById("tbl");
+  t.innerHTML = "<thead><tr><th>Week</th><th>Game</th><th>Player</th><th>Pick</th>"
+    + "<th>Conf</th><th>Spread</th><th>Result</th></tr></thead><tbody>"
+    + rows.slice(0,400).map(r=>{
+      const cls = r.result==="win"?"w":r.result==="loss"?"l":"na";
+      const nick = r.joke && r.team ? ` <span class="raw">“${esc(r.raw)}”</span>` : "";
+      return `<tr><td>${esc(r.week)}</td><td class="g">${esc(r.game)}</td>
+        <td>${esc(r.player)}</td>
+        <td class="${cls}"><span class="pk"><span class="dot"></span>${esc(r.team||r.raw||"—")}</span>${nick}
+          ${r.dog?'<span class="tag dog">dog</span>':""}${r.sd?'<span class="tag sd">superdog</span>':""}</td>
+        <td>${esc(r.conf||"–")}</td>
+        <td>${r.spread==null?"–":r.spread}</td>
+        <td class="${cls}">${r.result?(r.result==="win"?"hit":"miss"):"–"}</td></tr>`;
+    }).join("") + "</tbody>";
+  if(!rows.length) t.innerHTML = '<tbody><tr><td class="empty">No picks match these filters.</td></tr></tbody>';
+  splits(rows);
+}
+function splits(rows){
+  const el = document.getElementById("splits");
+  const st = PLAYERS.map((p,i)=>{
+    let w=0,l=0,sd=0;
+    for(const r of rows){ if(r.player!==p) continue; sd+=r.sdp||0;
+      if(!r.scored||!r.result) continue; r.result==="win"?w++:l++; }
+    return {p,i,w,l,n:w+l,sd};
+  });
+  const max = Math.max(1,...st.map(s=>s.n));
+  el.innerHTML = st.map(s=>`
+    <div style="display:flex;align-items:center;gap:12px;margin:7px 0">
+      <div style="width:74px;font-size:13px">${esc(s.p)}</div>
+      <div style="width:74px;font-variant-numeric:tabular-nums;font-size:13px">${s.w}-${s.l}</div>
+      <div style="width:52px;color:var(--mut);font-size:12px">${pct(s.w,s.n)}</div>
+      <div style="flex:1;height:9px;background:#21262d;border-radius:5px;overflow:hidden;min-width:80px">
+        <i style="display:block;height:100%;width:${(100*s.n/max).toFixed(1)}%;
+           background:linear-gradient(90deg,${col(s.i)} ${s.n?100*s.w/s.n:0}%,var(--loss) 0)"></i>
+      </div></div>`).join("");
+}
+
+// ---------- charts ----------
+function svg(w,h,inner){ return `<svg viewBox="0 0 ${w} ${h}">${inner}</svg>`; }
+
+function race(){
+  const W=980,H=300,L=44,R=14,T=14,B=28;
+  const wk = WEEKS.filter(x=>x!=="Week 0");
+  const series = PLAYERS.map((p,i)=>{
+    let c=0; const pts=[];
+    wk.forEach(w=>{ for(const r of ROWS){ if(r.player===p&&r.week===w&&r.scored&&r.result==="win") c++; }
+      pts.push(c); });
+    return {p,i,pts};
+  });
+  const max = Math.max(...series.flatMap(s=>s.pts))||1;
+  const x = j => L + j*(W-L-R)/Math.max(1,wk.length-1);
+  const y = v => T + (H-T-B)*(1-v/max);
+  let g="";
+  for(let k=0;k<=4;k++){ const v=Math.round(max*k/4);
+    g+=`<line class="gl" x1="${L}" y1="${y(v)}" x2="${W-R}" y2="${y(v)}"/>
+        <text class="axt" x="${L-8}" y="${y(v)+3}" text-anchor="end">${v}</text>`; }
+  wk.forEach((w,j)=>{ if(j%2===0||j===wk.length-1)
+    g+=`<text class="axt" x="${x(j)}" y="${H-8}" text-anchor="middle">${esc(w.replace("Week ","W").replace("Conf Champ","CCG").replace("BOWLS","Bowl"))}</text>`; });
+  series.forEach(s=>{
+    g+=`<polyline fill="none" stroke="${col(s.i)}" stroke-width="2.2" stroke-linejoin="round"
+        points="${s.pts.map((v,j)=>x(j)+","+y(v)).join(" ")}"/>`;
+    const last=s.pts[s.pts.length-1];
+    g+=`<circle cx="${x(s.pts.length-1)}" cy="${y(last)}" r="3.5" fill="${col(s.i)}"/>`;
+  });
+  document.getElementById("race").innerHTML = svg(W,H,g) +
+    `<div class="lgd">${series.map(s=>`<span><i style="background:${col(s.i)}"></i>${esc(s.p)} ${s.pts[s.pts.length-1]}</span>`).join("")}</div>`;
+}
+
+function hbars(elId, rowsOf, fmt){
+  const data = PLAYERS.map((p,i)=>({p,i,...rowsOf(p)}));
+  const max = Math.max(1,...data.map(d=>d.v));
+  document.getElementById(elId).innerHTML = data.map(d=>`
+    <div style="display:flex;align-items:center;gap:10px;margin:8px 0">
+      <div style="width:70px;font-size:13px">${esc(d.p)}</div>
+      <div style="flex:1;height:16px;background:#21262d;border-radius:4px;overflow:hidden">
+        <i style="display:block;height:100%;width:${(100*d.v/max).toFixed(1)}%;background:${col(d.i)}"></i></div>
+      <div style="width:96px;text-align:right;font-size:12px;color:var(--mut);
+        font-variant-numeric:tabular-nums">${fmt(d)}</div></div>`).join("");
+}
+
+function tallyIf(p,f){ let w=0,l=0;
+  for(const r of ROWS){ if(r.player!==p||!r.scored||!r.result||!f(r)) continue;
+    r.result==="win"?w++:l++; }
+  return {w,l,n:w+l,v:w+l?100*w/(w+l):0}; }
+
+function favdog(){
+  const el=document.getElementById("favdog");
+  const mk=(title,f)=>{
+    const d=PLAYERS.map((p,i)=>({p,i,...tallyIf(p,f)}));
+    return `<div style="font-size:12px;color:var(--mut);margin:10px 0 4px">${title}</div>`+
+      d.map(x=>`<div style="display:flex;align-items:center;gap:10px;margin:5px 0">
+        <div style="width:70px;font-size:13px">${esc(x.p)}</div>
+        <div style="flex:1;height:12px;background:#21262d;border-radius:3px;overflow:hidden">
+          <i style="display:block;height:100%;width:${x.v.toFixed(1)}%;background:${col(x.i)}"></i></div>
+        <div style="width:104px;text-align:right;font-size:12px;color:var(--mut);
+          font-variant-numeric:tabular-nums">${x.w}-${x.l} · ${x.v.toFixed(0)}%</div></div>`).join("");
+  };
+  el.innerHTML = mk("As the favorite", r=>r.fav) + mk("As the underdog", r=>r.dog);
+}
+
+function byspread(){
+  const B=["1-3","3.5-7","7.5-13.5","14-20.5","21+"];
+  let g=`<table class="mx"><thead><tr><th>Player</th>${B.map(b=>`<th>${b}</th>`).join("")}</tr></thead><tbody>`;
+  PLAYERS.forEach((p,i)=>{
+    g+=`<tr><th style="text-align:left">${esc(p)}</th>`+B.map(b=>{
+      const t=tallyIf(p,r=>r.bucket===b);
+      if(!t.n) return `<td class="na">–</td>`;
+      const a=Math.max(0,Math.min(1,(t.v-40)/50));
+      return `<td style="background:rgba(63,185,80,${(a*0.55).toFixed(2)})">${t.v.toFixed(0)}%
+        <div style="font-size:10px;color:var(--mut)">${t.w}-${t.l}</div></td>`;
+    }).join("")+"</tr>";
+  });
+  document.getElementById("byspread").innerHTML=g+"</tbody></table>";
+}
+
+function byconf(){
+  const counts={};
+  ROWS.forEach(r=>{ if(r.conf&&r.scored&&r.result) counts[r.conf]=(counts[r.conf]||0)+1; });
+  const C=Object.entries(counts).filter(([,n])=>n>=40).sort((a,b)=>b[1]-a[1]).slice(0,6).map(x=>x[0]);
+  let g=`<table class="mx"><thead><tr><th>Player</th>${C.map(c=>`<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>`;
+  PLAYERS.forEach(p=>{
+    g+=`<tr><th style="text-align:left">${esc(p)}</th>`+C.map(c=>{
+      const t=tallyIf(p,r=>r.conf===c);
+      if(!t.n) return `<td class="na">–</td>`;
+      const a=Math.max(0,Math.min(1,(t.v-40)/50));
+      return `<td style="background:rgba(63,185,80,${(a*0.55).toFixed(2)})">${t.v.toFixed(0)}%
+        <div style="font-size:10px;color:var(--mut)">${t.w}-${t.l}</div></td>`;
+    }).join("")+"</tr>";
+  });
+  document.getElementById("byconf").innerHTML=g+"</tbody></table>";
+}
+
+function agree(){
+  const key=r=>r.week+"|"+r.game;
+  const byGame={};
+  ROWS.forEach(r=>{ if(!r.team) return; (byGame[key(r)]=byGame[key(r)]||{})[r.player]=r.team; });
+  let g=`<table class="mx"><thead><tr><th></th>${PLAYERS.map(p=>`<th>${esc(p.slice(0,4))}</th>`).join("")}</tr></thead><tbody>`;
+  PLAYERS.forEach(a=>{
+    g+=`<tr><th style="text-align:left">${esc(a)}</th>`+PLAYERS.map(b=>{
+      if(a===b) return `<td class="na">—</td>`;
+      let same=0,n=0;
+      for(const k in byGame){ const G=byGame[k];
+        if(G[a]&&G[b]){ n++; if(G[a]===G[b]) same++; } }
+      if(!n) return `<td class="na">–</td>`;
+      const v=100*same/n, al=Math.max(0,Math.min(1,(v-50)/30));
+      return `<td style="background:rgba(212,160,23,${(al*0.5).toFixed(2)})">${v.toFixed(0)}%</td>`;
+    }).join("")+"</tr>";
+  });
+  document.getElementById("agree").innerHTML=g+"</tbody></table>";
+}
+
+function wall(){
+  const seen=new Set(), out=[];
+  ROWS.forEach(r=>{ if(!r.joke||!r.raw||!r.team) return;
+    const k=r.raw.toLowerCase(); if(seen.has(k)) return; seen.add(k);
+    out.push(r); });
+  out.sort((a,b)=>b.raw.length-a.raw.length);
+  document.getElementById("wall").innerHTML =
+    `<div style="display:flex;flex-wrap:wrap;gap:8px">` +
+    out.map(r=>{
+      const i=PLAYERS.indexOf(r.player);
+      return `<span title="${esc(r.player)} — ${esc(r.team)} (${esc(r.week)})"
+        style="border:1px solid var(--line);border-left:3px solid ${col(i)};border-radius:7px;
+        padding:5px 10px;font-size:13px;cursor:default">${esc(r.raw)}
+        <span style="color:var(--mut);font-size:11px">${esc(r.team)}</span></span>`;
+    }).join("") + `</div><div class="sub" style="margin-top:10px">${out.length} distinct nicknames. Hover for who wrote it.</div>`;
+}
+</script>
+</body>
+</html>
