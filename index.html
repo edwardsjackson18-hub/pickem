@@ -413,25 +413,30 @@ footer::before{content:"";display:block;width:52px;height:3px;margin:0 0 14px;
 </div>
 
 <script>
-let ROWS=[],PLAYERS=[],WEEKS=[],PIDX={},HIST=null,SEASON=2025;
+let ROWS=[],PLAYERS=[],WEEKS=[],PIDX={},HIST=null,ESPN=null,SEASON=2025;
 const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const pct=(w,n)=>n?(100*w/n).toFixed(1)+"%":"–";
 const pvar=p=>"var(--p"+(PIDX[p]%5)+")";
 
 Promise.all([fetch("season.json").then(r=>r.json()),
-             fetch("history.json").then(r=>r.json()).catch(()=>null)])
-  .then(([data,hist])=>{
-  HIST=hist;
+             fetch("history.json").then(r=>r.json()).catch(()=>null),
+             fetch("espn.json").then(r=>r.json()).catch(()=>null)])
+  .then(([data,hist,espn])=>{
+  HIST=hist; ESPN=espn;
   WEEKS=data.map(w=>w.tab);
   const ps=[];
   data.forEach(w=>w.games.forEach(g=>{
     Object.entries(g.picks).forEach(([p,v])=>{
       if(!ps.includes(p)) ps.push(p);
+      // auto-grade from ESPN when the sheet has not been coloured yet
+      let res=v.result, auto=false;
+      const ev=ESPN&&ESPN.games&&ESPN.games[w.tab]&&ESPN.games[w.tab][g.raw];
+      if(!res&&ev&&ev.winner&&v.team_id){res=(v.team_id===ev.winner)?"win":"loss";auto=true;}
       const joke=v.team&&v.raw&&
         !v.team.toLowerCase().split(/[^a-z]+/).some(t=>t.length>2&&v.raw.toLowerCase().includes(t));
       ROWS.push({week:w.tab,game:g.raw,spread:g.spread,bucket:g.bucket,slate:g.slate,
         bowl:g.bowl,scored:g.scored,player:p,raw:v.raw,team:v.team,conf:v.conf,
-        result:v.result,dog:v.is_dog,fav:v.is_fav,sd:v.superdog,sdp:v.sd_points,joke:joke});
+        result:res,auto:auto,dog:v.is_dog,fav:v.is_fav,sd:v.superdog,sdp:v.sd_points,joke:joke});
     });
   }));
   PLAYERS=ps; PLAYERS.forEach((p,i)=>PIDX[p]=i);
@@ -522,6 +527,7 @@ function render(){
     "<th>Conf</th><th>Spread</th><th>Result</th></tr></thead><tbody>"+
     (rows.length?rows.slice(0,400).map(r=>{
       const cls=r.result==="win"?"hit":r.result==="loss"?"miss":"na";
+      const autoTag=r.auto?'<span class="tag" title="graded automatically from the ESPN result">auto</span>':"";
       const nick=r.joke&&r.team?` <span class="nick">&ldquo;${esc(r.raw)}&rdquo;</span>`:"";
       return `<tr><td class="week">${esc(r.week)}</td><td class="game">${esc(r.game)}</td>
         <td>${esc(r.player)}</td>
@@ -529,7 +535,7 @@ function render(){
         ${r.dog?'<span class="tag dog">dog</span>':""}${r.sd?'<span class="tag sdog">superdog</span>':""}</td>
         <td class="conf">${esc(r.conf||"–")}</td>
         <td class="spread">${r.spread==null?"–":r.spread}</td>
-        <td class="${cls}">${r.result?(r.result==="win"?"hit":"miss"):"–"}</td></tr>`;
+        <td class="${cls}">${r.result?(r.result==="win"?"hit":"miss"):"–"}${autoTag}</td></tr>`;
     }).join():'<tr class="empty-row"><td colspan="7">No picks match these filters.</td></tr>')+"</tbody>";
   splits(rows);
 }

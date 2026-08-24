@@ -87,7 +87,9 @@ def shape(tab, rows):
             k = "superdog" if re.match(r"^(superdog|points)", label, re.I) else "record"
             stated[k] = {p: c["t"] for p, c in zip(players, picks)}
             continue
-        if SKIP.match(label) and not any(p["t"] for p in picks):
+        # a slate/date header is ALWAYS a header - Week 14's "NOON SLATE" row
+        # had stray text in a pick column and leaked through as a game
+        if SKIP.match(label):
             if re.match(r"^(mon|tue|wed|thu|fri|sat|sun)", label, re.I): gdate = label
             else: slate = label
             continue

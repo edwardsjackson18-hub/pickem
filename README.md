@@ -118,6 +118,37 @@ python scripts/freeze_season.py 2026
 The workbook keeps the season *records* regardless, but individual picks,
 nicknames and Superdog flags exist only in the sheet until they are frozen.
 
+## Auto-grading from ESPN
+
+`scripts/espn_link.py` links every game to its real ESPN event and reads the
+winner, which means **a week can score itself without anyone colouring a cell**.
+No API key, no auth.
+
+The join is by team id against each team's own season schedule:
+
+```
+https://site.api.espn.com/apis/site/v2/sports/football/college-football
+    /teams/{team_id}/schedule?season={year}&seasontype={2|3}
+```
+
+Two things that look like details and are not:
+
+- **Query the schedule, not the scoreboard.** The scoreboard's `week` param
+  under-returns (7 of 8 Week 0 games missing) and a date-range query drops FCS
+  opponents. Per-team schedules matched 315/315.
+- **Two teams can meet twice.** Taking the first id match graded 20 Conf Champ
+  picks against the regular-season meeting instead of the title game. Postseason
+  tabs now take the later, `seasontype=3` event.
+
+Validated against the 2025 season, which was graded by hand: **315/315 games
+matched, and 1548 of 1552 graded picks agree (99.7%)**.
+
+The four that disagree are all Jackson, and all the same shape - the whole row
+was coloured red for the consensus pick while he alone had the winner under a
+nickname (`Iliad` for Illinois, who beat USC 34-32). ESPN says those were wins.
+They are left as the sheet has them, and reported on every run, because changing
+a pool's records is not a script's call.
+
 ## Resolving nicknames
 
 Picks are freeform and often jokes — `Cock Tuah`, `Hooty Hoo`, `Ole piss`,

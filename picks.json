@@ -8855,42 +8855,9 @@
     }
    },
    {
-    "game": "NOON SLATE",
-    "spread": null,
-    "slate": "DURING THE WEEK",
-    "date": null,
-    "picks": {
-     "JP": {
-      "pick": "",
-      "won": null,
-      "superdog": false
-     },
-     "Jack": {
-      "pick": "",
-      "won": null,
-      "superdog": false
-     },
-     "Robert": {
-      "pick": "",
-      "won": null,
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "",
-      "won": null,
-      "superdog": false
-     },
-     "Michael": {
-      "pick": "Who the fuck knows man",
-      "won": null,
-      "superdog": false
-     }
-    }
-   },
-   {
     "game": "#1 Ohio State -11.5 @ #15 Michigan",
     "spread": 11.5,
-    "slate": "DURING THE WEEK",
+    "slate": "NOON SLATE",
     "date": null,
     "picks": {
      "JP": {
@@ -8923,7 +8890,7 @@
    {
     "game": "#13 Miami FL -6.5 @ #24 Pitt",
     "spread": 6.5,
-    "slate": "DURING THE WEEK",
+    "slate": "NOON SLATE",
     "date": null,
     "picks": {
      "JP": {
@@ -8956,7 +8923,7 @@
    {
     "game": "Clemson @ South Carolina -2.5",
     "spread": 2.5,
-    "slate": "DURING THE WEEK",
+    "slate": "NOON SLATE",
     "date": null,
     "picks": {
      "JP": {
@@ -10165,39 +10132,6 @@
     }
    },
    {
-    "game": "Frisco: UNLV vs Ohio",
-    "spread": null,
-    "slate": null,
-    "date": "Tuesday, 12/23",
-    "picks": {
-     "JP": {
-      "pick": "Ohio",
-      "won": "win",
-      "superdog": false
-     },
-     "Jack": {
-      "pick": "UNLV",
-      "won": "loss",
-      "superdog": false
-     },
-     "Robert": {
-      "pick": "UNLV",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "UNLV",
-      "won": "loss",
-      "superdog": false
-     },
-     "Michael": {
-      "pick": "UNLV",
-      "won": "loss",
-      "superdog": false
-     }
-    }
-   },
-   {
     "game": "Hawaii: California @ Hawaii",
     "spread": null,
     "slate": null,
@@ -10759,43 +10693,10 @@
     }
    },
    {
-    "game": "Sun: Arizona State vs Duke",
-    "spread": null,
-    "slate": null,
-    "date": "Wednesday, 12/31",
-    "picks": {
-     "JP": {
-      "pick": "Duke",
-      "won": "win",
-      "superdog": false
-     },
-     "Jack": {
-      "pick": "Duke",
-      "won": "win",
-      "superdog": false
-     },
-     "Robert": {
-      "pick": "Duke",
-      "won": "win",
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "ASU",
-      "won": "loss",
-      "superdog": false
-     },
-     "Michael": {
-      "pick": "Duke",
-      "won": "win",
-      "superdog": false
-     }
-    }
-   },
-   {
     "game": "Citrus: #13 Texas vs #18 Michigan",
     "spread": null,
     "slate": null,
-    "date": "Wednesday, 12/31",
+    "date": "Sun: Arizona State vs Duke",
     "picks": {
      "JP": {
       "pick": "Texas",
@@ -10828,7 +10729,7 @@
     "game": "Las Vegas: Nebraska vs #15 Utah",
     "spread": null,
     "slate": null,
-    "date": "Wednesday, 12/31",
+    "date": "Sun: Arizona State vs Duke",
     "picks": {
      "JP": {
       "pick": "Utah",
@@ -10861,7 +10762,7 @@
     "game": "Cotton: #2 Ohio State vs #10 Miami FL",
     "spread": null,
     "slate": null,
-    "date": "Wednesday, 12/31",
+    "date": "Sun: Arizona State vs Duke",
     "picks": {
      "JP": {
       "pick": "OSU",

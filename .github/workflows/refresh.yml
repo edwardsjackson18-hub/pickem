@@ -4,7 +4,8 @@ name: Refresh picks from Google Sheet
 # The sheet is link-shared, so no credentials are needed.
 on:
   schedule:
-    - cron: "0 13 * * 1"      # Mondays 13:00 UTC (~8am ET), after the weekend's games
+    - cron: "0 13 * * 1"      # Mondays 13:00 UTC (~8am ET), after the weekend
+    - cron: "0 15 * * 0"      # Sundays 15:00 UTC, to grade Saturday's games
   workflow_dispatch:           # ...or run it by hand from the Actions tab
 
 permissions:
@@ -33,6 +34,24 @@ jobs:
           grep -q "GRADING CHECKSUM: 0 conflicts" build.log \
             || { echo "::error::grading checksum failed - a pick resolved to the wrong team"; exit 1; }
 
+      - name: Link games to ESPN and grade them
+        # Auto-grades the current season from real results, so a week scores
+        # itself whether or not anyone colours the sheet. Also audits weeks that
+        # WERE coloured - a disagreement means a mis-scored game or a
+        # mis-resolved team.
+        run: python scripts/espn_link.py | tee espn.log
+
+      - name: Report any sheet-vs-ESPN disagreement
+        run: |
+          if grep -q "DISAGREEMENTS" espn.log; then
+            echo "::warning::the sheet's colours disagree with ESPN on some picks"
+            sed -n '/DISAGREEMENTS/,$p' espn.log
+          fi
+          if grep -qE "unmatched [1-9]" espn.log; then
+            echo "::warning::some games did not match an ESPN event - check team resolution"
+            sed -n '/unmatched games/,$p' espn.log | head -20
+          fi
+
       - name: Warn on unresolved picks
         run: |
           if grep -q "^unresolved" build.log; then
@@ -44,7 +63,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add season.json picks.json
+          git add season.json picks.json espn.json seasons/
           git diff --staged --quiet && echo "no changes" && exit 0
           git commit -m "Refresh picks from the sheet"
           git push

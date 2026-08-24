@@ -89,6 +89,13 @@ LATE = {"waz":"WSU", "c unt":"UNT", "kstate im scared":"KSU",
         "kstate":"KSU", "ga tech":"GT", "gatech":"GT"}
 for _k,_c in LATE.items():
     if _c in CID: idx[_k].add(CID[_c])
+# Direct ESPN-id overrides for labels the alias table gets wrong. "Sac State"
+# was resolving to South Carolina State; ESPN's schedule proved it is
+# Sacramento State (id 16). Caught by the API cross-check, not the colour check.
+LATE_IDS = {"sac state": "16", "sacramento st": "16", "sac st": "16"}
+for _k, _i in LATE_IDS.items():
+    school[_k] = {_i}
+    idx[_k].add(_i)
 LATE_OVR = {("Week 7","#10 Georgia -3.5 @ Auburn","Michael"):"UGA"}
 HARD_OVERRIDES.update(LATE_OVR)
 NON_PICKS2 = set(NON_PICKS) | {"Who the fuck knows man"}
@@ -153,13 +160,22 @@ def last_frozen_season(tab):
     return None
 
 def rolled_over(w):
-    """True once the live tab's games no longer match any frozen snapshot."""
-    live = [g["game"] for g in w["games"] if (w["tab"], g["game"]) not in DROP]
+    """True once the live tab holds a genuinely different slate.
+
+    Compared by OVERLAP, not exact equality: a parser change can shift a game
+    label slightly, and demanding an exact match made every tab look like it had
+    rolled over. A real new season shares ~no games with the old one, so a low
+    overlap is the honest signal.
+    """
+    live = {g["game"] for g in w["games"] if (w["tab"], g["game"]) not in DROP}
     yr = last_frozen_season(w["tab"])
     if yr is None:
         return True                      # nothing frozen for this tab yet
-    old = frozen_games(yr, w["tab"])
-    return set(live) != set(old)
+    old = set(frozen_games(yr, w["tab"]) or [])
+    if not old or not live:
+        return True
+    overlap = len(live & old) / float(max(len(live), len(old)))
+    return overlap < 0.5
 
 weeks = json.load(io.open(PICKS, encoding="utf-8"))
 out, stat = [], collections.Counter()
@@ -216,6 +232,7 @@ for w in weeks:
             "neutral": g["neutral"], "bowl": g["prefix"], "scored": scored,
             "away_label": g["away"]["name"] if g["away"] else None,
             "home_label": g["home"]["name"] if g["home"] else None,
+            "away_id": aid, "home_id": hid,
             "away": by_id[aid]["school"] if aid else None,
             "home": by_id[hid]["school"] if hid else None,
             "away_conf": by_id[aid]["conf_short"] if aid else None,
