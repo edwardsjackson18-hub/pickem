@@ -17,27 +17,27 @@
     "picks": {
      "JP": {
       "pick": "TCU",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Jack": {
       "pick": "TCU",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "TCU",
+      "won": "loss",
       "superdog": false
      },
      "Jackson": {
       "pick": "TCU",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "Frawgs",
+      "won": "loss",
       "superdog": false
      }
     }
@@ -59,7 +59,7 @@
       "superdog": false
      },
      "Robert": {
-      "pick": "",
+      "pick": "USC",
       "won": null,
       "superdog": false
      },
@@ -69,7 +69,7 @@
       "superdog": false
      },
      "Michael": {
-      "pick": "",
+      "pick": "Matt Damon survivors",
       "won": null,
       "superdog": false
      }
@@ -92,7 +92,7 @@
       "superdog": false
      },
      "Robert": {
-      "pick": "",
+      "pick": "UVA",
       "won": null,
       "superdog": false
      },
@@ -102,7 +102,7 @@
       "superdog": false
      },
      "Michael": {
-      "pick": "",
+      "pick": "UVA",
       "won": null,
       "superdog": false
      }
@@ -125,7 +125,7 @@
       "superdog": true
      },
      "Robert": {
-      "pick": "",
+      "pick": "Jax",
       "won": null,
       "superdog": false
      },
@@ -135,9 +135,9 @@
       "superdog": true
      },
      "Michael": {
-      "pick": "",
+      "pick": "Ray Harper",
       "won": null,
-      "superdog": false
+      "superdog": true
      }
     }
    },
@@ -158,7 +158,7 @@
       "superdog": false
      },
      "Robert": {
-      "pick": "",
+      "pick": "Fighting Billy Donlons",
       "won": null,
       "superdog": false
      },
@@ -168,7 +168,7 @@
       "superdog": false
      },
      "Michael": {
-      "pick": "",
+      "pick": "EMU",
       "won": null,
       "superdog": false
      }
@@ -191,9 +191,9 @@
       "superdog": false
      },
      "Robert": {
-      "pick": "",
+      "pick": "Hawaii",
       "won": null,
-      "superdog": false
+      "superdog": true
      },
      "Jackson": {
       "pick": "Stanford",
@@ -201,7 +201,7 @@
       "superdog": false
      },
      "Michael": {
-      "pick": "",
+      "pick": "Trees",
       "won": null,
       "superdog": false
      }
@@ -224,7 +224,7 @@
       "superdog": false
      },
      "Robert": {
-      "pick": "",
+      "pick": "FSU",
       "won": null,
       "superdog": false
      },
@@ -234,7 +234,7 @@
       "superdog": false
      },
      "Michael": {
-      "pick": "",
+      "pick": "FSU",
       "won": null,
       "superdog": false
      }
@@ -252,14 +252,14 @@
       "superdog": false
      },
      "Jack": {
-      "pick": "UNLV",
+      "pick": "Memphis",
       "won": null,
       "superdog": false
      },
      "Robert": {
-      "pick": "",
+      "pick": "Memphis",
       "won": null,
-      "superdog": true
+      "superdog": false
      },
      "Jackson": {
       "pick": "UNLV",
@@ -267,7 +267,7 @@
       "superdog": false
      },
      "Michael": {
-      "pick": "",
+      "pick": "Sex and Gambling",
       "won": null,
       "superdog": false
      }
