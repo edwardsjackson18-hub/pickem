@@ -837,27 +837,27 @@
     "picks": {
      "JP": {
       "pick": "UDub",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Jack": {
       "pick": "Washington",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
       "pick": "Washington",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Jackson": {
       "pick": "Washington",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Michael": {
       "pick": "Dub",
-      "won": null,
+      "won": "win",
       "superdog": false
      }
     }
@@ -870,27 +870,27 @@
     "picks": {
      "JP": {
       "pick": "Irish",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Jack": {
       "pick": "Notre Dame",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
       "pick": "ND",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Jackson": {
       "pick": "ND",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Michael": {
       "pick": "Notre Dame",
-      "won": null,
+      "won": "win",
       "superdog": false
      }
     }
@@ -903,27 +903,27 @@
     "picks": {
      "JP": {
       "pick": "Louisville",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Jack": {
       "pick": "Ole Miss",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
       "pick": "UL",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Jackson": {
       "pick": "Louisville",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Michael": {
       "pick": "Piss",
-      "won": null,
+      "won": "win",
       "superdog": false
      }
     }
@@ -936,27 +936,27 @@
     "picks": {
      "JP": {
       "pick": "SMU",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Jack": {
       "pick": "SMU",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
       "pick": "SMU",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Jackson": {
       "pick": "SMU",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Michael": {
       "pick": "SMU",
-      "won": null,
+      "won": "win",
       "superdog": false
      }
     }
@@ -964,16 +964,16 @@
   ],
   "stated": {
    "record": {
-    "JP": "",
-    "Jack": "",
-    "Robert": "",
-    "Jackson": "",
-    "Michael": ""
+    "JP": "13-7",
+    "Jack": "16-4",
+    "Robert": "13-7",
+    "Jackson": "15-5",
+    "Michael": "15-5"
    },
    "superdog": {
-    "JP": "",
+    "JP": "0",
     "Jack": "0",
-    "Robert": "",
+    "Robert": "0",
     "Jackson": "0",
     "Michael": "0"
    }
@@ -990,694 +990,661 @@
   ],
   "games": [
    {
-    "game": "#11 Illinois -3.5 @ Duke",
-    "spread": 3.5,
-    "slate": "NOON SLATE",
+    "game": "Rutgers @ Boston College -3",
+    "spread": 3.0,
+    "slate": "DURING THE WEEK",
     "date": null,
     "picks": {
      "JP": {
-      "pick": "Duke",
-      "won": "loss",
+      "pick": "Bird 9/11",
+      "won": "win",
       "superdog": false
      },
      "Jack": {
-      "pick": "Illinois",
+      "pick": "Boston College",
       "won": "win",
       "superdog": false
      },
      "Robert": {
-      "pick": "Duke",
-      "won": "loss",
-      "superdog": true
+      "pick": "BC",
+      "won": "win",
+      "superdog": false
      },
      "Jackson": {
-      "pick": "Illinois",
+      "pick": "BC",
       "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "Illinois",
+      "pick": "BC",
       "won": "win",
       "superdog": false
      }
     }
    },
    {
-    "game": "Iowa @ #16 Iowa State -3.5",
-    "spread": 3.5,
-    "slate": "NOON SLATE",
+    "game": "#22 Missouri -5.5 @ Kansas",
+    "spread": 5.5,
+    "slate": "DURING THE WEEK",
     "date": null,
     "picks": {
      "JP": {
-      "pick": "Iowa State",
-      "won": "win",
+      "pick": "JOHN BROWN",
+      "won": "loss",
       "superdog": false
      },
      "Jack": {
-      "pick": "Iowa State",
+      "pick": "Missouri",
       "won": "win",
       "superdog": false
      },
      "Robert": {
-      "pick": "Iowa State",
-      "won": "win",
+      "pick": "Kansas",
+      "won": "loss",
       "superdog": false
      },
      "Jackson": {
-      "pick": "Iowa State",
+      "pick": "Missouri",
       "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "Iowa st",
+      "pick": "Mizz",
       "won": "win",
       "superdog": false
      }
     }
    },
    {
-    "game": "Baylor @ #17 SMU -2.5",
-    "spread": 2.5,
+    "game": "App State @ East Carolina -7.5",
+    "spread": 7.5,
     "slate": "NOON SLATE",
     "date": null,
     "picks": {
      "JP": {
-      "pick": "SMU",
+      "pick": "ECU",
       "won": "loss",
       "superdog": false
      },
      "Jack": {
-      "pick": "SMU",
+      "pick": "ECU",
       "won": "loss",
       "superdog": false
      },
      "Robert": {
-      "pick": "SMU",
+      "pick": "ECU",
       "won": "loss",
       "superdog": false
      },
      "Jackson": {
-      "pick": "Baylor",
-      "won": "win",
+      "pick": "ECU",
+      "won": "loss",
       "superdog": false
      },
      "Michael": {
-      "pick": "SMU",
-      "won": "loss",
-      "superdog": false
-     }
-    }
-   },
-   {
-    "game": "Virginia @ NC State -2.5",
-    "spread": 2.5,
-    "slate": "NOON SLATE",
-    "date": null,
-    "picks": {
-     "JP": {
-      "pick": "NCSU",
-      "won": "win",
-      "superdog": false
-     },
-     "Jack": {
-      "pick": "Virginia",
-      "won": "loss",
-      "superdog": false
-     },
-     "Robert": {
-      "pick": "UVA",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "Pack",
-      "won": "win",
-      "superdog": false
-     },
-     "Michael": {
-      "pick": "State",
-      "won": "win",
-      "superdog": false
-     }
-    }
-   },
-   {
-    "game": "Liberty -6.5 @ Jax State",
-    "spread": 6.5,
-    "slate": "NOON SLATE",
-    "date": null,
-    "picks": {
-     "JP": {
-      "pick": "Cock Tuah",
-      "won": "win",
-      "superdog": true
-     },
-     "Jack": {
-      "pick": "Jax State",
-      "won": "win",
-      "superdog": true
-     },
-     "Robert": {
-      "pick": "Abstinence",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "Cocks",
-      "won": "win",
-      "superdog": false
-     },
-     "Michael": {
-      "pick": "Fear the beak",
+      "pick": "Neers",
       "won": "win",
       "superdog": true
      }
     }
    },
    {
-    "game": "W Carolina @ Wake Forest -17",
-    "spread": 17.0,
-    "slate": "AFTERNOON SLATE",
-    "date": null,
-    "picks": {
-     "JP": {
-      "pick": "Wake",
-      "won": "win",
-      "superdog": false
-     },
-     "Jack": {
-      "pick": "Wake",
-      "won": "win",
-      "superdog": false
-     },
-     "Robert": {
-      "pick": "Wake",
-      "won": "win",
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "Western",
-      "won": "loss",
-      "superdog": true
-     },
-     "Michael": {
-      "pick": "Wake",
-      "won": "win",
-      "superdog": false
-     }
-    }
-   },
-   {
-    "game": "Oklahoma St @ #6 Oregon -29.5",
-    "spread": 29.5,
-    "slate": "AFTERNOON SLATE",
+    "game": "#6 Oregon -22.5 @ Oklahoma St",
+    "spread": 22.5,
+    "slate": "NOON SLATE",
     "date": null,
     "picks": {
      "JP": {
       "pick": "Oregon",
-      "won": "win",
+      "won": "loss",
       "superdog": false
      },
      "Jack": {
       "pick": "Oregon",
-      "won": "win",
+      "won": "loss",
       "superdog": false
      },
      "Robert": {
       "pick": "Oregon",
-      "won": "win",
+      "won": "loss",
       "superdog": false
      },
      "Jackson": {
       "pick": "Oregon",
-      "won": "win",
+      "won": "loss",
       "superdog": false
      },
      "Michael": {
       "pick": "Ducks",
-      "won": "win",
+      "won": "loss",
       "superdog": false
      }
     }
    },
    {
-    "game": "#20 Ole Miss -10.5 @ Kentucky",
-    "spread": 10.5,
-    "slate": "AFTERNOON SLATE",
+    "game": "Arizona St @ #8 TAMU -14.5",
+    "spread": 14.5,
+    "slate": "NOON SLATE",
     "date": null,
     "picks": {
      "JP": {
-      "pick": "Ole Miss",
+      "pick": "Aggy",
       "won": "win",
       "superdog": false
      },
      "Jack": {
-      "pick": "Ole Miss",
+      "pick": "Texas A&M",
       "won": "win",
       "superdog": false
      },
      "Robert": {
-      "pick": "Mississippi",
+      "pick": "TAMU",
       "won": "win",
       "superdog": false
      },
      "Jackson": {
-      "pick": "Ole Miss",
+      "pick": "Aggy",
       "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "Ole piss",
+      "pick": "A&M",
       "won": "win",
       "superdog": false
      }
     }
    },
    {
-    "game": "Kansas @ Missouri -6.5",
-    "spread": 6.5,
-    "slate": "AFTERNOON SLATE",
+    "game": "#11 Oklahoma -5.5 @ Michigan",
+    "spread": 5.5,
+    "slate": "NOON SLATE",
     "date": null,
     "picks": {
      "JP": {
-      "pick": "Mizzou",
-      "won": "win",
-      "superdog": false
-     },
-     "Jack": {
-      "pick": "Missouri",
-      "won": "win",
-      "superdog": false
-     },
-     "Robert": {
-      "pick": "Misery",
-      "won": "win",
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "Mizzou",
-      "won": "win",
-      "superdog": false
-     },
-     "Michael": {
-      "pick": "Missouri",
-      "won": "win",
-      "superdog": false
-     }
-    }
-   },
-   {
-    "game": "Fresno St @ Oregon St -3.5",
-    "spread": 3.5,
-    "slate": "AFTERNOON SLATE",
-    "date": null,
-    "picks": {
-     "JP": {
-      "pick": "Oregon St",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jack": {
-      "pick": "Oregon State",
-      "won": "loss",
-      "superdog": false
-     },
-     "Robert": {
-      "pick": "OSU",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "Fresno",
-      "won": "win",
-      "superdog": false
-     },
-     "Michael": {
-      "pick": "Beavers",
-      "won": "loss",
-      "superdog": false
-     }
-    }
-   },
-   {
-    "game": "Texas State @ UTSA -4.5",
-    "spread": 4.5,
-    "slate": "AFTERNOON SLATE",
-    "date": null,
-    "picks": {
-     "JP": {
-      "pick": "UTSA",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jack": {
-      "pick": "UTSA",
-      "won": "loss",
-      "superdog": false
-     },
-     "Robert": {
-      "pick": "UTSA",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "UTSA",
-      "won": "loss",
-      "superdog": false
-     },
-     "Michael": {
-      "pick": "Texas State",
-      "won": "win",
-      "superdog": false
-     }
-    }
-   },
-   {
-    "game": "West Virginia -3.5 @ Ohio",
-    "spread": 3.5,
-    "slate": "AFTERNOON SLATE",
-    "date": null,
-    "picks": {
-     "JP": {
-      "pick": "WVU",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jack": {
-      "pick": "WVU",
-      "won": "loss",
-      "superdog": false
-     },
-     "Robert": {
-      "pick": "WVU",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "WVU",
-      "won": "loss",
-      "superdog": false
-     },
-     "Michael": {
-      "pick": "Country roads",
-      "won": "loss",
-      "superdog": false
-     }
-    }
-   },
-   {
-    "game": "USF @ #13 Florida -17.5",
-    "spread": 17.5,
-    "slate": "AFTERNOON SLATE",
-    "date": null,
-    "picks": {
-     "JP": {
-      "pick": "Florida",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jack": {
-      "pick": "Florida",
-      "won": "loss",
-      "superdog": false
-     },
-     "Robert": {
-      "pick": "Fla",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "Florida",
-      "won": "loss",
-      "superdog": false
-     },
-     "Michael": {
-      "pick": "Florida",
-      "won": "loss",
-      "superdog": false
-     }
-    }
-   },
-   {
-    "game": "UNC -13.5 @ Charlotte",
-    "spread": 13.5,
-    "slate": "NIGHT SLATE",
-    "date": null,
-    "picks": {
-     "JP": {
-      "pick": "UNC",
-      "won": "win",
-      "superdog": false
-     },
-     "Jack": {
-      "pick": "UNC",
-      "won": "win",
-      "superdog": false
-     },
-     "Robert": {
-      "pick": "UNC",
-      "won": "win",
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "UNC",
-      "won": "win",
-      "superdog": false
-     },
-     "Michael": {
-      "pick": "UNC",
-      "won": "win",
-      "superdog": false
-     }
-    }
-   },
-   {
-    "game": "#12 Arizona St -6.5 @ Miss State",
-    "spread": 6.5,
-    "slate": "NIGHT SLATE",
-    "date": null,
-    "picks": {
-     "JP": {
-      "pick": "ASU",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jack": {
-      "pick": "ASU",
-      "won": "loss",
-      "superdog": false
-     },
-     "Robert": {
-      "pick": "ASU",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "Sparky",
-      "won": "loss",
-      "superdog": false
-     },
-     "Michael": {
-      "pick": "ASU",
-      "won": "loss",
-      "superdog": false
-     }
-    }
-   },
-   {
-    "game": "#15 Michigan @ #18 Oklahoma -2.5",
-    "spread": 2.5,
-    "slate": "NIGHT SLATE",
-    "date": null,
-    "picks": {
-     "JP": {
-      "pick": "Michigan",
+      "pick": "Oklahoma",
       "won": "loss",
       "superdog": false
      },
      "Jack": {
       "pick": "Oklahoma",
-      "won": "win",
+      "won": "loss",
       "superdog": false
      },
      "Robert": {
-      "pick": "Mich",
+      "pick": "Oklahoma",
       "won": "loss",
       "superdog": false
      },
      "Jackson": {
       "pick": "OU",
-      "won": "win",
+      "won": "loss",
       "superdog": false
      },
      "Michael": {
-      "pick": "Michigan",
+      "pick": "Oklahoma",
       "won": "loss",
       "superdog": false
      }
     }
    },
    {
-    "game": "Vanderbilt @ VA Tech -1.5",
+    "game": "Wash. St @ Kansas St -18.5",
+    "spread": 18.5,
+    "slate": "NOON SLATE",
+    "date": null,
+    "picks": {
+     "JP": {
+      "pick": "KState",
+      "won": "win",
+      "superdog": false
+     },
+     "Jack": {
+      "pick": "Kansas State",
+      "won": "win",
+      "superdog": false
+     },
+     "Robert": {
+      "pick": "KState",
+      "won": "win",
+      "superdog": false
+     },
+     "Jackson": {
+      "pick": "Kansas",
+      "won": "win",
+      "superdog": false
+     },
+     "Michael": {
+      "pick": "Kats",
+      "won": "win",
+      "superdog": false
+     }
+    }
+   },
+   {
+    "game": "Wake Forest -3 @ Purdue",
+    "spread": 3.0,
+    "slate": "NOON SLATE",
+    "date": null,
+    "picks": {
+     "JP": {
+      "pick": "Wake",
+      "won": "win",
+      "superdog": false
+     },
+     "Jack": {
+      "pick": "Wake Forest",
+      "won": "win",
+      "superdog": false
+     },
+     "Robert": {
+      "pick": "Wake",
+      "won": "win",
+      "superdog": false
+     },
+     "Jackson": {
+      "pick": "Wake",
+      "won": "win",
+      "superdog": false
+     },
+     "Michael": {
+      "pick": "Wake",
+      "won": "win",
+      "superdog": false
+     }
+    }
+   },
+   {
+    "game": "#12 Alabama -10.5 @ Kentucky",
+    "spread": 10.5,
+    "slate": "AFTERNOON SLATE",
+    "date": null,
+    "picks": {
+     "JP": {
+      "pick": "Bama",
+      "won": "win",
+      "superdog": false
+     },
+     "Jack": {
+      "pick": "Alabama",
+      "won": "win",
+      "superdog": false
+     },
+     "Robert": {
+      "pick": "Bama",
+      "won": "win",
+      "superdog": false
+     },
+     "Jackson": {
+      "pick": "Kentucky",
+      "won": "loss",
+      "superdog": true
+     },
+     "Michael": {
+      "pick": "Bama",
+      "won": "win",
+      "superdog": false
+     }
+    }
+   },
+   {
+    "game": "Arizona @ #15 BYU -7.5",
+    "spread": 7.5,
+    "slate": "AFTERNOON SLATE",
+    "date": null,
+    "picks": {
+     "JP": {
+      "pick": "BYU",
+      "won": "win",
+      "superdog": false
+     },
+     "Jack": {
+      "pick": "BYU",
+      "won": "win",
+      "superdog": false
+     },
+     "Robert": {
+      "pick": "BYU",
+      "won": "win",
+      "superdog": false
+     },
+     "Jackson": {
+      "pick": "My Cousins",
+      "won": "win",
+      "superdog": false
+     },
+     "Michael": {
+      "pick": "BYU",
+      "won": "win",
+      "superdog": false
+     }
+    }
+   },
+   {
+    "game": "Mississipi St -1.5 @ Minnesota",
     "spread": 1.5,
-    "slate": "NIGHT SLATE",
+    "slate": "AFTERNOON SLATE",
     "date": null,
     "picks": {
      "JP": {
-      "pick": "VT",
+      "pick": "Minnesota",
       "won": "loss",
       "superdog": false
      },
      "Jack": {
-      "pick": "Vandy",
-      "won": "win",
-      "superdog": false
-     },
-     "Robert": {
-      "pick": "VT",
+      "pick": "Minnesota",
       "won": "loss",
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "VT",
-      "won": "loss",
-      "superdog": false
-     },
-     "Michael": {
-      "pick": "Vandy",
-      "won": "win",
-      "superdog": false
-     }
-    }
-   },
-   {
-    "game": "Boston Col @ Michigan St -4.5",
-    "spread": 4.5,
-    "slate": "NIGHT SLATE",
-    "date": null,
-    "picks": {
-     "JP": {
-      "pick": "Boston College",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jack": {
-      "pick": "Sparty?",
-      "won": "win",
-      "superdog": false
-     },
-     "Robert": {
-      "pick": "Bandans",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "Revenge",
-      "won": "win",
-      "superdog": false
-     },
-     "Michael": {
-      "pick": "Sparty",
-      "won": "win",
-      "superdog": false
-     }
-    }
-   },
-   {
-    "game": "UCLA  -2.5 @ UNLV",
-    "spread": 2.5,
-    "slate": "NIGHT SLATE",
-    "date": null,
-    "picks": {
-     "JP": {
-      "pick": "UCLA",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jack": {
-      "pick": "UNLV",
-      "won": "win",
-      "superdog": false
-     },
-     "Robert": {
-      "pick": "UCLA",
-      "won": "loss",
-      "superdog": false
-     },
-     "Jackson": {
-      "pick": "UNLV",
-      "won": "win",
-      "superdog": false
-     },
-     "Michael": {
-      "pick": "UNLV",
-      "won": "win",
-      "superdog": false
-     }
-    }
-   },
-   {
-    "game": "#2 S Dakota St @ #3 Montana St",
-    "spread": null,
-    "slate": "NIGHT SLATE",
-    "date": null,
-    "picks": {
-     "JP": {
-      "pick": "SDSU",
-      "won": "win",
-      "superdog": false
-     },
-     "Jack": {
-      "pick": "S Dakota St",
-      "won": "win",
-      "superdog": false
+      "superdog": true
      },
      "Robert": {
       "pick": "MSU",
-      "won": "loss",
+      "won": "win",
       "superdog": false
      },
      "Jackson": {
-      "pick": "SDSU",
+      "pick": "Clanga",
       "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "SDSU",
+      "pick": "Miss St",
       "won": "win",
       "superdog": false
      }
     }
    },
    {
-    "game": "San Diego St @ Wazzu -1.5",
+    "game": "UCF @ Pitt -7",
+    "spread": 7.0,
+    "slate": "AFTERNOON SLATE",
+    "date": null,
+    "picks": {
+     "JP": {
+      "pick": "Pitt",
+      "won": "win",
+      "superdog": false
+     },
+     "Jack": {
+      "pick": "Pitt",
+      "won": "win",
+      "superdog": false
+     },
+     "Robert": {
+      "pick": "Pitt",
+      "won": "win",
+      "superdog": false
+     },
+     "Jackson": {
+      "pick": "Pitt",
+      "won": "win",
+      "superdog": false
+     },
+     "Michael": {
+      "pick": "Pitt",
+      "won": "win",
+      "superdog": false
+     }
+    }
+   },
+   {
+    "game": "California @ Syracuse -3.5",
+    "spread": 3.5,
+    "slate": "AFTERNOON SLATE",
+    "date": null,
+    "picks": {
+     "JP": {
+      "pick": "Cal",
+      "won": "win",
+      "superdog": true
+     },
+     "Jack": {
+      "pick": "Syracuse?",
+      "won": "loss",
+      "superdog": false
+     },
+     "Robert": {
+      "pick": "Cal",
+      "won": "win",
+      "superdog": false
+     },
+     "Jackson": {
+      "pick": "Cal",
+      "won": "win",
+      "superdog": false
+     },
+     "Michael": {
+      "pick": "Cal",
+      "won": "win",
+      "superdog": false
+     }
+    }
+   },
+   {
+    "game": "Duke @ Illinois -6",
+    "spread": 6.0,
+    "slate": "AFTERNOON SLATE",
+    "date": null,
+    "picks": {
+     "JP": {
+      "pick": "Illinois",
+      "won": "loss",
+      "superdog": false
+     },
+     "Jack": {
+      "pick": "Illinois",
+      "won": "loss",
+      "superdog": false
+     },
+     "Robert": {
+      "pick": "Duke",
+      "won": "win",
+      "superdog": false
+     },
+     "Jackson": {
+      "pick": "Illinois",
+      "won": "loss",
+      "superdog": false
+     },
+     "Michael": {
+      "pick": "Illinous",
+      "won": "loss",
+      "superdog": false
+     }
+    }
+   },
+   {
+    "game": "UTSA @ Texas State -1.5",
+    "spread": 1.5,
+    "slate": "AFTERNOON SLATE",
+    "date": null,
+    "picks": {
+     "JP": {
+      "pick": "Texas St",
+      "won": "loss",
+      "superdog": false
+     },
+     "Jack": {
+      "pick": "UTSA",
+      "won": "win",
+      "superdog": false
+     },
+     "Robert": {
+      "pick": "Texas State",
+      "won": "loss",
+      "superdog": false
+     },
+     "Jackson": {
+      "pick": "Texas State",
+      "won": "loss",
+      "superdog": false
+     },
+     "Michael": {
+      "pick": "UTSA?",
+      "won": "win",
+      "superdog": false
+     }
+    }
+   },
+   {
+    "game": "Memphis @ Boise State -8.5",
+    "spread": 8.5,
+    "slate": "NIGHT SLATE",
+    "date": null,
+    "picks": {
+     "JP": {
+      "pick": "Boise State",
+      "won": "win",
+      "superdog": false
+     },
+     "Jack": {
+      "pick": "Boise State",
+      "won": "win",
+      "superdog": false
+     },
+     "Robert": {
+      "pick": "Memphis",
+      "won": "loss",
+      "superdog": true
+     },
+     "Jackson": {
+      "pick": "Boie",
+      "won": "win",
+      "superdog": false
+     },
+     "Michael": {
+      "pick": "Boise",
+      "won": "win",
+      "superdog": false
+     }
+    }
+   },
+   {
+    "game": "#18 Tennessee -12.5 @ GA Tech",
+    "spread": 12.5,
+    "slate": "NIGHT SLATE",
+    "date": null,
+    "picks": {
+     "JP": {
+      "pick": "UTK",
+      "won": "win",
+      "superdog": false
+     },
+     "Jack": {
+      "pick": "Tennessee",
+      "won": "win",
+      "superdog": false
+     },
+     "Robert": {
+      "pick": "Tennessee",
+      "won": "win",
+      "superdog": false
+     },
+     "Jackson": {
+      "pick": "UTK",
+      "won": "win",
+      "superdog": false
+     },
+     "Michael": {
+      "pick": "UTK",
+      "won": "win",
+      "superdog": false
+     }
+    }
+   },
+   {
+    "game": "#1 Ohio State @ #4 Texas -1.5",
     "spread": 1.5,
     "slate": "NIGHT SLATE",
     "date": null,
     "picks": {
      "JP": {
-      "pick": "Wazzu",
+      "pick": "Texas",
       "won": "win",
       "superdog": false
      },
      "Jack": {
-      "pick": "San Diego St",
+      "pick": "Ohio State",
       "won": "loss",
       "superdog": false
      },
      "Robert": {
-      "pick": "WAZ",
+      "pick": "Ohio State",
+      "won": "loss",
+      "superdog": false
+     },
+     "Jackson": {
+      "pick": "TX",
+      "won": "win",
+      "superdog": false
+     },
+     "Michael": {
+      "pick": "OH",
+      "won": "loss",
+      "superdog": false
+     }
+    }
+   },
+   {
+    "game": "Iowa State @ #21 Iowa -14",
+    "spread": 14.0,
+    "slate": "NIGHT SLATE",
+    "date": null,
+    "picks": {
+     "JP": {
+      "pick": "Iowa",
+      "won": "win",
+      "superdog": false
+     },
+     "Jack": {
+      "pick": "Iowa",
+      "won": "win",
+      "superdog": false
+     },
+     "Robert": {
+      "pick": "Iowa",
       "won": "win",
       "superdog": false
      },
      "Jackson": {
-      "pick": "SDSU",
-      "won": "loss",
+      "pick": "Iowa",
+      "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "SDSU",
-      "won": "loss",
+      "pick": "Iowa",
+      "won": "win",
+      "superdog": false
+     }
+    }
+   },
+   {
+    "game": "Arkansas @ #20 Utah -12.5",
+    "spread": 12.5,
+    "slate": "NIGHT SLATE",
+    "date": null,
+    "picks": {
+     "JP": {
+      "pick": "Utah",
+      "won": "win",
+      "superdog": false
+     },
+     "Jack": {
+      "pick": "Utah",
+      "won": "win",
+      "superdog": false
+     },
+     "Robert": {
+      "pick": "Utah",
+      "won": "win",
+      "superdog": false
+     },
+     "Jackson": {
+      "pick": "Utah",
+      "won": "win",
+      "superdog": false
+     },
+     "Michael": {
+      "pick": "Utes",
+      "won": "win",
       "superdog": false
      }
     }
@@ -1685,18 +1652,18 @@
   ],
   "stated": {
    "record": {
-    "JP": "9-11",
-    "Jack": "12-8",
-    "Robert": "7-13",
-    "Jackson": "13-7",
-    "Michael": "13-7"
+    "JP": "13-7",
+    "Jack": "13-7",
+    "Robert": "13-7",
+    "Jackson": "14-6",
+    "Michael": "16-4"
    },
    "superdog": {
-    "JP": "6.5",
-    "Jack": "6.5",
+    "JP": "3.5",
+    "Jack": "0",
     "Robert": "0",
     "Jackson": "0",
-    "Michael": "6.5"
+    "Michael": "7.5"
    }
   }
  },
