@@ -3061,27 +3061,27 @@
     "picks": {
      "JP": {
       "pick": "Pitt",
-      "won": null,
+      "won": "win",
       "superdog": true
      },
      "Jack": {
       "pick": "Pitt",
-      "won": null,
-      "superdog": false
+      "won": "win",
+      "superdog": true
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "Pitt",
+      "won": "win",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "VT",
+      "won": "loss",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "Super Weapon",
+      "won": "win",
       "superdog": false
      }
     }
@@ -3094,27 +3094,27 @@
     "picks": {
      "JP": {
       "pick": "Penn State",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Jack": {
-      "pick": "Northwestern",
-      "won": null,
+      "pick": "PSU",
+      "won": "loss",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "Penn State",
+      "won": "loss",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
+      "pick": "NA",
       "won": null,
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "State Penn",
+      "won": "loss",
       "superdog": false
      }
     }
@@ -3126,28 +3126,28 @@
     "date": null,
     "picks": {
      "JP": {
-      "pick": "Clanga",
-      "won": null,
+      "pick": "Alabama",
+      "won": "win",
       "superdog": false
      },
      "Jack": {
       "pick": "Alabama",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "Alabama",
+      "won": "win",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
-      "superdog": false
+      "pick": "Clanga",
+      "won": "loss",
+      "superdog": true
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "Bama",
+      "won": "win",
       "superdog": false
      }
     }
@@ -3160,27 +3160,27 @@
     "picks": {
      "JP": {
       "pick": "Houston",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Jack": {
       "pick": "Houston",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "Houston",
+      "won": "win",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "Houston",
+      "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "Houston",
+      "won": "win",
       "superdog": false
      }
     }
@@ -3193,27 +3193,27 @@
     "picks": {
      "JP": {
       "pick": "WVU",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Jack": {
       "pick": "Iowa State",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "WVU",
+      "won": "loss",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "WVU",
+      "won": "loss",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "WVU",
+      "won": "loss",
       "superdog": false
      }
     }
@@ -3226,27 +3226,27 @@
     "picks": {
      "JP": {
       "pick": "Michigan",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Jack": {
-      "pick": "Minnesota",
-      "won": null,
-      "superdog": true
+      "pick": "Michigan",
+      "won": "loss",
+      "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "Michigan",
+      "won": "loss",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "Minnesota",
+      "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "Michigan",
+      "won": "loss",
       "superdog": false
      }
     }
@@ -3259,27 +3259,27 @@
     "picks": {
      "JP": {
       "pick": "Ohio State",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Jack": {
       "pick": "Ohio State",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "OSU",
+      "won": "win",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "OSU",
+      "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "OH",
+      "won": "win",
       "superdog": false
      }
     }
@@ -3292,27 +3292,27 @@
     "picks": {
      "JP": {
       "pick": "Florida",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Jack": {
       "pick": "Florida",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "Florida",
+      "won": "loss",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "Florida",
+      "won": "loss",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "Florida",
+      "won": "loss",
       "superdog": false
      }
     }
@@ -3325,27 +3325,27 @@
     "picks": {
      "JP": {
       "pick": "Tennessee",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Jack": {
-      "pick": "Tennessee",
-      "won": null,
+      "pick": "Auburn",
+      "won": "loss",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "Tennessee",
+      "won": "win",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "utk",
+      "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "UTK",
+      "won": "win",
       "superdog": false
      }
     }
@@ -3358,27 +3358,27 @@
     "picks": {
      "JP": {
       "pick": "Cal",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Jack": {
       "pick": "UNLV",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "UNLV",
+      "won": "win",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "UNLV",
+      "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "UNLV",
+      "won": "win",
       "superdog": false
      }
     }
@@ -3391,27 +3391,27 @@
     "picks": {
      "JP": {
       "pick": "Louisville",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Jack": {
       "pick": "Louisville",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "Louisville",
+      "won": "loss",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "Louisville",
+      "won": "loss",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "Louisville",
+      "won": "loss",
       "superdog": false
      }
     }
@@ -3424,27 +3424,27 @@
     "picks": {
      "JP": {
       "pick": "UVA",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Jack": {
       "pick": "Florida State",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "UVA",
+      "won": "loss",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "UVA",
+      "won": "loss",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "FSU",
+      "won": "win",
       "superdog": false
      }
     }
@@ -3457,27 +3457,27 @@
     "picks": {
      "JP": {
       "pick": "South Carolina",
-      "won": null,
+      "won": "loss",
       "superdog": false
      },
      "Jack": {
       "pick": "Kentucky",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "South Carolina",
+      "won": "loss",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "Kentucky",
+      "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "UK",
+      "won": "win",
       "superdog": false
      }
     }
@@ -3490,27 +3490,27 @@
     "picks": {
      "JP": {
       "pick": "BYU",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Jack": {
       "pick": "BYU",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "BYU",
+      "won": "win",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "BYU",
+      "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "BYU",
+      "won": "win",
       "superdog": false
      }
     }
@@ -3523,27 +3523,27 @@
     "picks": {
      "JP": {
       "pick": "Texas A&M",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Jack": {
       "pick": "Texas A&M",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "TAMU",
+      "won": "win",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "TAMU",
+      "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "Ass & Mouth",
+      "won": "win",
       "superdog": false
      }
     }
@@ -3556,27 +3556,27 @@
     "picks": {
      "JP": {
       "pick": "Miami",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Jack": {
       "pick": "Miami",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "Miami",
+      "won": "win",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "Miami",
+      "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "Miami",
+      "won": "win",
       "superdog": false
      }
     }
@@ -3589,27 +3589,27 @@
     "picks": {
      "JP": {
       "pick": "TTU",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Jack": {
       "pick": "Texas Tech",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
+      "pick": "TTU",
+      "won": "win",
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "TTU",
+      "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "TT",
+      "won": "win",
       "superdog": false
      }
     }
@@ -3622,27 +3622,27 @@
     "picks": {
      "JP": {
       "pick": "Southern Cal",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Jack": {
       "pick": "USC",
-      "won": null,
+      "won": "win",
       "superdog": false
      },
      "Robert": {
-      "pick": "",
-      "won": null,
-      "superdog": false
+      "pick": "Washington",
+      "won": "loss",
+      "superdog": true
      },
      "Jackson": {
-      "pick": "",
-      "won": null,
+      "pick": "USC",
+      "won": "win",
       "superdog": false
      },
      "Michael": {
-      "pick": "",
-      "won": null,
+      "pick": "USC",
+      "won": "win",
       "superdog": false
      }
     }
@@ -3664,17 +3664,17 @@
       "superdog": false
      },
      "Robert": {
-      "pick": "",
+      "pick": "Baylor",
       "won": null,
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
+      "pick": "Sparky",
       "won": null,
       "superdog": false
      },
      "Michael": {
-      "pick": "",
+      "pick": "Sparky",
       "won": null,
       "superdog": false
      }
@@ -3697,29 +3697,29 @@
       "superdog": false
      },
      "Robert": {
-      "pick": "",
+      "pick": "Arizona",
       "won": null,
       "superdog": false
      },
      "Jackson": {
-      "pick": "",
+      "pick": "Arizona",
       "won": null,
       "superdog": false
      },
      "Michael": {
-      "pick": "",
+      "pick": "Cincy",
       "won": null,
-      "superdog": false
+      "superdog": true
      }
     }
    }
   ],
   "stated": {
    "superdog": {
-    "JP": "",
-    "Jack": "",
-    "Robert": "",
-    "Jackson": "",
+    "JP": "4",
+    "Jack": "4",
+    "Robert": "5.5",
+    "Jackson": "0",
     "Michael": ""
    },
    "record": {
